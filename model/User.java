@@ -1,9 +1,9 @@
 package com.whatsapp.model;
 
 /**
- * Get and set the user's detail.
+ * Gets and sets the user's details.
  *
- * @version 0.1
+ * @version 1.0
  * @author Anisha brightlin
  */
 public class User {
@@ -12,7 +12,12 @@ public class User {
     private String dateOfBirth;
     private String name;
     private String about;
+    private DefaultAbout defaultAbout;
     private Status status;
+
+    public enum DefaultAbout {
+
+    }
 
     public void setMobileNumber(final String mobileNumber) {
         this.mobileNumber = mobileNumber;

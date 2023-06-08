@@ -7,8 +7,6 @@ import com.whatsapp.service.UserService;
 /**
  * Passes the data between user and the service.
  *
- * @see com.whatsapp.model.User
- * @see UserService
  * @version 1.0
  * @author Anisha brightlin
  */

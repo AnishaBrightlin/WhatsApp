@@ -5,13 +5,13 @@ import com.whatsapp.model.User;
 /**
  * Defines the behavior of whatsApp service
  *
- * @version 1.00
+ * @version 1.0
  * @author Anisha Brightlin
  */
 public interface UserService {
 
     /**
-     * Append all the user details into the list
+     * Appends all the user details into the list
      *
      * @param user the user object containing the user details
      * @return Returns the mobile number of the signed-up user
@@ -19,14 +19,14 @@ public interface UserService {
     String signUp(final User user);
 
     /**
-     * Retrieve the user details
+     * Retrieves the user details
      *
      * @return Returns the set of user details
      */
     User getUserDetails(final String mobileNumber);
 
     /**
-     * Check the user is already signUp
+     * Checks the user is already signUp
      *
      * @param mobileNumber the user object to check
      * @return Returns true if the user is already exist else false

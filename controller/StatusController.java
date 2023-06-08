@@ -8,8 +8,6 @@ import java.util.Date;
 /**
  * Passes the data between status and the service.
  *
- * @see com.whatsapp.model.Status
- * @see com.whatsapp.service.StatusService
  * @version 1.0
  * @author Anisha Brightlin
  */
@@ -28,7 +26,7 @@ public class StatusController {
     }
 
     /**
-     * Checks the given
+     * Checks the given time is expired or not
      *
      * @param time the time containing the status expire time
      * @return true if the status is expired else false

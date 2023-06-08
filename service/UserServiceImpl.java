@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * Implements the Service interface and provides the WhatsApp functionality
+ * Implements the service interface and provides the whatsApp functionality
  *
  * @version 1.0
  * @author Anisha Brightlin

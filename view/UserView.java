@@ -14,7 +14,7 @@ import java.util.Scanner;
  * Allows users to sign up, sign in, view and update their profiles, and delete their accounts.
  *
  * @author Anisha Brightlin
- * @version 1.00
+ * @version 1.0
  */
 public class UserView {
 
@@ -34,14 +34,14 @@ public class UserView {
             case 1:
                 final User user = new User();
 
-                user.setMobileNumber(getUserMobileNumber());
-                user.setDateOfBirth(getUserDateOfBirth());
-                user.setName(getUserName());
-                user.setAbout(getUserAbout());
+                user.setMobileNumber(getMobileNumber());
+                user.setDateOfBirth(getDateOfBirth());
+                user.setName(getName());
+                user.setAbout(getAbout());
                 USER_CONTROLLER.signUp(user);
                 break;
             case 2:
-                userChoice();
+                getChoice();
                 break;
             default:
                 System.out.println("Enter the valid choice 1 or 2");
@@ -193,7 +193,7 @@ public class UserView {
      *
      * @return the user about
      */
-    private String getUserAbout() {
+    private String getAbout() {
         System.out.println("Press 1 for predefined about and press 2 for custom about");
         String about = null;
 
@@ -219,7 +219,7 @@ public class UserView {
                         break;
                     default:
                         System.out.println("Enter the valid choice between 1-5");
-                        getUserAbout();
+                        getAbout();
                 }
                 break;
             case 2:
@@ -229,7 +229,7 @@ public class UserView {
                 break;
             default:
                 System.out.println("Enter the valid choice 1 or 2");
-                getUserAbout();
+                getAbout();
         }
         return about;
     }
@@ -239,7 +239,7 @@ public class UserView {
      */
     private void displayProfileDetails() {
         System.out.println("Enter the mobile number");
-        System.out.println(USER_CONTROLLER.getUserDetail(getUserMobileNumber()));
+        System.out.println(USER_CONTROLLER.getUserDetail(getMobileNumber()));
     }
 
     /**
@@ -251,9 +251,9 @@ public class UserView {
         switch (getUserChoice()) {
             case 1:
 
-                if (USER_CONTROLLER.deleteAccount(getUserMobileNumber())) {
+                if (USER_CONTROLLER.deleteAccount(getMobileNumber())) {
                     System.out.println("Account is deleted");
-                    userChoice();
+                    getChoice();
                 } else {
                     System.out.println("Enter the valid mobile number");
                     deleteAccount();
@@ -279,11 +279,11 @@ public class UserView {
 
         switch (getUserChoice()) {
             case 1:
-                user.setName(getUserName());
+                user.setName(getName());
                 updateProfile();
                 break;
             case 2:
-                user.setDateOfBirth(getUserDateOfBirth());
+                user.setDateOfBirth(getDateOfBirth());
                 updateProfile();
                 break;
             case 3:
@@ -316,16 +316,39 @@ public class UserView {
     }
 
     /**
-     * Gets the mobile number of the user
+     * Gets the country code
      *
-     * @return Returns the mobile number
+     * @return the country code
      */
-    private String getUserMobileNumber() {
-        System.out.println("Enter the mobile number");
-        final String mobileNumber = SCANNER.next().trim();
+    private String getCountryCode() {
+        System.out.println("Enter the country code (must include +)");
+        final String countryCode = SCANNER.nextLine().trim();
 
-        SCANNER.nextLine();
-        return USER_VALIDATION.checkMobileNumber(mobileNumber) ? mobileNumber : getUserMobileNumber();
+        return USER_VALIDATION.isValidCountryCode(countryCode) ? countryCode : getCountryCode();
+    }
+
+    /**
+     * Gets the valid mobile number of the user
+     *
+     * @return the mobile number
+     */
+    private String getValidMobileNumber() {
+        System.out.println("Enter the mobile number (must be a digit)");
+        final String mobileNumber = SCANNER.nextLine().trim();
+
+        return mobileNumber;
+    }
+
+    /**
+     * Validates the mobile number with respect to country code.
+     *
+     * @return the valid mobile number
+     */
+    private String getMobileNumber() {
+        final String countryCode = getCountryCode();
+        final String mobileNumber = getValidMobileNumber();
+
+        return USER_VALIDATION.isValidMobileNumber(countryCode, mobileNumber) ? mobileNumber : getMobileNumber();
     }
 
     /**
@@ -333,11 +356,11 @@ public class UserView {
      *
      * @return Returns the date of birth
      */
-    private String getUserDateOfBirth() {
-        System.out.println("Enter the date Of birth(YYYY-MM-DD)");
+    private String getDateOfBirth() {
+        System.out.println("Enter the date Of birth(DD-MM-YYYY)");
         final String dateOfBirth = SCANNER.nextLine().trim();
 
-        return USER_VALIDATION.isDateOfBirthValid(dateOfBirth) ? dateOfBirth : getUserDateOfBirth();
+        return USER_VALIDATION.isDateOfBirthValid(dateOfBirth) ? dateOfBirth : getDateOfBirth();
     }
 
     /**
@@ -345,11 +368,11 @@ public class UserView {
      *
      * @return Returns the name
      */
-    private String getUserName() {
+    private String getName() {
         System.out.println("Enter user name");
         final String name = SCANNER.nextLine().trim();
 
-        return USER_VALIDATION.checkName(name) ? name : getUserName();
+        return USER_VALIDATION.checkName(name) ? name : getName();
     }
 
     /**
@@ -358,20 +381,20 @@ public class UserView {
      * @return true if the mobile number is already sign up else false
      */
     private boolean verifyMobileNumber() {
-        return USER_CONTROLLER.signIn(getUserMobileNumber());
+        return USER_CONTROLLER.signIn(getMobileNumber());
     }
 
     public static void main(String[] args) {
         System.out.println("WhatsApp from Meta");
         final UserView view = new UserView();
 
-        view.userChoice();
+        view.getChoice();
     }
 
     /**
-     * According to the given choice, allows the user to perform the signUp or signIn process
+     * Allows the user to perform the signUp or signIn process.
      */
-    private void userChoice() {
+    private void getChoice() {
         System.out.println("Enter the choice:\n1.Sign up\n2.Sign in\n3.Exit");
 
         switch (getUserChoice()) {
@@ -388,7 +411,7 @@ public class UserView {
                 break;
             default:
                 System.out.println("Enter the valid choice between 1-3");
-                userChoice();
+                getChoice();
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.whatsapp.model;
 
 import java.util.Set;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -14,9 +13,8 @@ public class Status {
 
     private String message;
     private Date time;
-    private int viwersCount;
+    private int viewsCount;
     private Set<String> viewers;
-    private Date deleteTime;
 
     public void setStatus(final String status) {
         this.message = status;
@@ -30,8 +28,8 @@ public class Status {
         this.viewers = viewers;
     }
 
-    public void setViwersCount(final int viwersCount) {
-        this.viwersCount = viwersCount;
+    public void setViewsCount(final int viewsCount) {
+        this.viewsCount = viewsCount;
     }
 
     public String getStatus() {
@@ -40,10 +38,6 @@ public class Status {
 
     public Date getStatusTime() {
         return time;
-    }
-
-    public Date getDeleteTime() {
-        return deleteTime;
     }
 }
 

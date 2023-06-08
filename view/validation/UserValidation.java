@@ -4,14 +4,19 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Validates the user details
  *
- * @version 1.0
  * @author Anisha Brightlin
+ * @version 1.0
  */
 public class UserValidation {
+
+    public boolean isValidCountryCode(final String countryCode) {
+        return countryCode.matches("^\\+\\d{1,3}$");
+    }
 
     /**
      * Validates the user mobile number
@@ -19,12 +24,25 @@ public class UserValidation {
      * @param mobileNumber the mobile number to validate
      * @return true if the mobile number is valid else false
      */
-    public boolean checkMobileNumber(final String mobileNumber) {
-        return mobileNumber.matches("^[6-9]\\d{9}$");
+    public boolean isValidMobileNumber(final String countryCode, final String mobileNumber) {
+
+        if (countryCode.equals("+93")) {
+            return mobileNumber.matches("^0\\d{9}$");
+        } else if (countryCode.equals("+91")) {
+            return mobileNumber.matches("[6-9]\\d{9}");
+        } else if (countryCode.equals("+61")) {
+            return mobileNumber.matches("04\\d{8}");
+        } else if (countryCode.equals("+1")) {
+            return mobileNumber.matches("[4-8]\\d{9}");
+        } else if (countryCode.equals("+299")) {
+            return mobileNumber.matches("[0-9]{6}");
+        }
+
+        return false;
     }
 
     /**
-     * Validates the user's choice
+     * Validates the user choice
      *
      * @param choice the choice to validate
      * @return true if the choice is valid else false
@@ -50,9 +68,8 @@ public class UserValidation {
      * @return true if the date of birth is valid else false
      */
     public boolean isDateOfBirthValid(final String dateOfBirth) {
-
         try {
-            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
             final int currentYear = LocalDate.now().getYear();
 
@@ -60,27 +77,24 @@ public class UserValidation {
                 return false;
             }
             final int maxDayOfMonth = date.getMonth().maxLength();
+            final int birthDate = date.getDayOfMonth();
 
-            if (date.getMonth().equals(Month.FEBRUARY)) {
-                final boolean isLeapYear = Year.isLeap(date.getYear());
+            /*if (date.getMonth() == Month.FEBRUARY) {
+                final boolean isLeapYear = Year.of(date.getYear()).isLeap();
+                final int maxDayOfFebruary = isLeapYear ? 29 : 28;
 
-                if (isLeapYear && date.getDayOfMonth() >= 29) {
-                    return false;
-                } else if (!isLeapYear && date.getDayOfMonth() > maxDayOfMonth) {
+                if (date.getDayOfMonth() >= maxDayOfFebruary) {
                     return false;
                 }
-            }
+            }*/
 
-            if (date.getDayOfMonth() > maxDayOfMonth) {
+            if (birthDate <= maxDayOfMonth) {
                 return false;
             }
 
             return true;
-        } catch (Exception exception) {
+        } catch (final DateTimeParseException exception) {
             return false;
         }
     }
 }
-
-
-
