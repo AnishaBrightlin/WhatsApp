@@ -53,7 +53,6 @@ public class UserView {
      * Verifies the mobile number and allow them to perform the required action
      */
     private void signIn() {
-
         if (verifyMobileNumber()) {
             System.out.println("Sign in successfully");
             viewHomeScreen();
@@ -116,7 +115,7 @@ public class UserView {
     }
 
     /**
-     * Puts and view the other's Status.
+     * Puts and view the other's status.
      */
     private void viewStatus() {
         System.out.println("Enter your choice:\n1.Put status\n2.View other's status\n3.Exit");
