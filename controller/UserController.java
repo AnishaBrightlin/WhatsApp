@@ -20,7 +20,7 @@ public class UserController {
      * @param user the user object containing the user details
      * @return the mobile number of the signed-up user.
      */
-    public String signUp(final User user) {
+    public boolean signUp(final User user) {
         return SERVICE.signUp(user);
     }
 
@@ -29,8 +29,8 @@ public class UserController {
      *
      * @return user details
      */
-    public User getUserDetail(final String mobileNumber) {
-        return SERVICE.getUserDetails(mobileNumber);
+    public User getUserDetail(final int id) {
+        return SERVICE.getUserDetails(id);
     }
 
     /**

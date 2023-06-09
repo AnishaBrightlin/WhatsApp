@@ -8,47 +8,26 @@ import java.util.HashSet;
 /**
  * Implements the service interface and provides the whatsApp functionality
  *
- * @version 1.0
  * @author Anisha Brightlin
+ * @version 1.0
  */
 public class UserServiceImpl implements UserService {
 
-    private final Set<User> userList = new HashSet<>();
+    private final Set<User> userSet = new HashSet<>();
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public String signUp(final User user) {
-        userList.add(user);
-
-        return user.getMobileNumber();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public User getUserDetails(final String mobileNumber) {
-        User foundUser = null;
-
-        for (User user : userList) {
-            if (user.getMobileNumber().equals(mobileNumber)) {
-                foundUser = user;
-                break;
-            }
-        }
-
-        if (foundUser != null) {
-            return foundUser;
-        }
-        return null;
+    public boolean signUp(final User user) {
+        return userSet.add(user);
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean signIn(final String mobileNumber) {
-        for (final User user : userList) {
+
+        for (final User user : userSet) {
 
             if (user.getMobileNumber().equals(mobileNumber)) {
                 return true;
@@ -60,9 +39,23 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      */
+    public User getUserDetails(final int id) {
+
+        for (User user : userSet) {
+
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public boolean isUpdatedProfile(final User user) {
 
-        for (final User existingUser : userList ) {
+        for (final User existingUser : userSet) {
 
             if (existingUser.getMobileNumber().equals(user.getMobileNumber())) {
                 existingUser.setName(existingUser.getName());
@@ -78,6 +71,6 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     public boolean deleteAccount(final String mobileNumber) {
-        return userList.removeIf(user -> user.getMobileNumber().equals(mobileNumber));
+        return userSet.removeIf(user -> user.getMobileNumber().equals(mobileNumber));
     }
 }

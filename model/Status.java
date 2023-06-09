@@ -1,46 +1,41 @@
 package com.whatsapp.model;
 
-import java.util.Set;
 import java.util.Date;
+import java.util.List;
 
 /**
- * Gets and sets the user's status.
+ * Represents the user status.
  *
- * @version 0.1
  * @author Anisha Brightlin
+ * @version 0.1
  */
 public class Status {
 
-    private String message;
+    private List<String> message;
     private Date time;
-    private int viewsCount;
-    private Set<String> viewers;
+    private int id;
 
-    public void setStatus(final String status) {
-        this.message = status;
+    public void setStatus(final List<String> message) {
+        this.message = message;
     }
 
     public void setTime(final Date time) {
         this.time = time;
     }
 
-    public void setViewers(final Set<String> viewers) {
-        this.viewers = viewers;
+    public void setStatusId(final int id) {
+        this.id = id;
     }
 
-    public void setViewsCount(final int viewsCount) {
-        this.viewsCount = viewsCount;
-    }
-
-    public String getStatus() {
-        return message.toString();
+    public List<String> getStatus() {
+        return message;
     }
 
     public Date getStatusTime() {
         return time;
     }
+
+    public int getId() {
+        return id;
+    }
 }
-
-
-
-

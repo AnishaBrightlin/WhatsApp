@@ -19,10 +19,8 @@ public class StatusServiceImpl implements StatusService {
     /**
      * {@inheritDoc}
      */
-    public String putStatus(final Status status) {
-        statusList.add(status);
-
-        return status.getStatus();
+    public boolean putStatus(final Status status) {
+        return statusList.add(status);
     }
 
     /**

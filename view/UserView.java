@@ -7,7 +7,9 @@ import com.whatsapp.model.User;
 import com.whatsapp.view.validation.StatusValidation;
 import com.whatsapp.view.validation.UserValidation;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -23,9 +25,12 @@ public class UserView {
     private static final UserValidation USER_VALIDATION = new UserValidation();
     private static final StatusValidation STATUS_VALIDATION = new StatusValidation();
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static int userId = 0;
+    private static int statusId = 0;
+
 
     /**
-     * Gets and sets the values of the user
+     * Sets the values of the user
      */
     private void signUp() {
         System.out.println("Enter 1 for sign up and 2 for exit");
@@ -34,14 +39,22 @@ public class UserView {
             case 1:
                 final User user = new User();
 
+                user.setId(++userId);
                 user.setMobileNumber(getMobileNumber());
                 user.setDateOfBirth(getDateOfBirth());
                 user.setName(getName());
                 user.setAbout(getAbout());
-                USER_CONTROLLER.signUp(user);
+
+                if (USER_CONTROLLER.signUp(user)) {
+                    System.out.println("Sign up successfully");
+                } else {
+                    System.out.println("Something went wrong retry");
+                    signUp();
+                }
                 break;
             case 2:
-                getChoice();
+                SCANNER.close();
+                System.exit(0);
                 break;
             default:
                 System.out.println("Enter the valid choice 1 or 2");
@@ -53,11 +66,14 @@ public class UserView {
      * Verifies the mobile number and allow them to perform the required action
      */
     private void signIn() {
+        System.out.println("For mobile number verification");
+
         if (verifyMobileNumber()) {
             System.out.println("Sign in successfully");
             viewHomeScreen();
         } else {
             System.out.println("The mobile number is not exist please sign up");
+            signUp();
             signIn();
         }
     }
@@ -78,7 +94,8 @@ public class UserView {
                 viewHomeScreen();
                 break;
             case 4:
-                signUp();
+                SCANNER.close();
+                System.exit(0);
                 break;
             default:
                 System.out.println("Enter the valid choice between 1-3");
@@ -118,7 +135,7 @@ public class UserView {
      * Puts and view the other's status.
      */
     private void viewStatus() {
-        System.out.println("Enter your choice:\n1.Put status\n2.View other's status\n3.Exit");
+        System.out.println("Enter your choice:\n1.Put status\n2.View other's status\n3.Homepage");
 
         switch (getUserChoice()) {
             case 1:
@@ -139,24 +156,22 @@ public class UserView {
     }
 
     /**
-     * Appends the status of the user
+     * Puts the status of the user
      */
     private void putStatus() {
-        System.out.println("Enter your choice:\n1.Put status\n2.Exit");
+        System.out.println("Enter your choice:\n1.Put status\n2.Back to view status");
         final Status status = new Status();
+        final List<String> userStatus = new ArrayList<>();
 
         switch (getUserChoice()) {
             case 1:
-                System.out.println("Enter the status");
-                final String UserStatus = SCANNER.nextLine().trim();
+                userStatus.add(getMessage());
+                System.out.println("Again you want to add a status if yes enter Y/y else N/n");
+                final String option = getUserOption();
 
-                if (STATUS_VALIDATION.checkStatusLength(UserStatus)) {
-                    status.setStatus(UserStatus);
-                } else {
-                    System.out.println("The status length should be within 30 characters");
-                    putStatus();
+                if ("y".equals(option) || "Y" .equals(option)) {
+                    userStatus.add(getMessage());;
                 }
-                putStatus();
                 break;
             case 2:
                 viewStatus();
@@ -167,8 +182,28 @@ public class UserView {
         }
         final Calendar calender = Calendar.getInstance();
 
+        status.setStatus(userStatus);
         status.setTime(calender.getTime());
-        STATUS_CONTROLLER.putStatus(status);
+        status.setStatusId(++statusId);
+
+        if (STATUS_CONTROLLER.putStatus(status)) {
+            System.out.println("Uploaded");
+        } else {
+            System.out.println("Something went wrong retry");
+            putStatus();
+        }
+    }
+
+    /**
+     * Gets the status message from the user
+     *
+     * @return the message
+     */
+    private String getMessage() {
+        System.out.println("Enter the status message");
+        final String message = SCANNER.nextLine().trim();
+
+        return STATUS_VALIDATION.isValidStatus(message) ? message : getMessage();
     }
 
     /**
@@ -188,7 +223,7 @@ public class UserView {
     }
 
     /**
-     * Sets about the user.
+     * Gets about the user.
      *
      * @return the user about
      */
@@ -237,8 +272,10 @@ public class UserView {
      * Displays the user details
      */
     private void displayProfileDetails() {
-        System.out.println("Enter the mobile number");
-        System.out.println(USER_CONTROLLER.getUserDetail(getMobileNumber()));
+        System.out.println("Enter the id");
+        final int id = SCANNER.nextInt();
+
+        System.out.println(USER_CONTROLLER.getUserDetail(id));
     }
 
     /**
@@ -271,28 +308,24 @@ public class UserView {
      * Updates the user details
      */
     private void updateProfile() {
-        final User user = new User();
+        final User user = USER_CONTROLLER.getUserDetail(1);
 
-        System.out.println("Enter your choice:\n1.Update name\n2.Date of birth\n3.Exit");
-        displayProfileDetails();
+        System.out.println("If you want to update the name enter Y/y else N/n");
+        String option = getUserOption();
 
-        switch (getUserChoice()) {
-            case 1:
-                user.setName(getName());
-                updateProfile();
-                break;
-            case 2:
-                user.setDateOfBirth(getDateOfBirth());
-                updateProfile();
-                break;
-            case 3:
-                viewProfile();
-                break;
-            default:
-                System.out.println("Enter the valid choice between 1-3");
-                updateProfile();
+        if ("y".equals(option) || "Y".equals(option)) {
+            user.setName(getName());
+        } else {
+            user.setName(user.getName());
         }
-        System.out.println(user);
+        System.out.println("If you want to update the date of birth enter Y/y else N/n");
+        option = getUserOption();
+
+        if ("y".equals(option) || "Y".equals(option)) {
+            user.setDateOfBirth(getDateOfBirth());
+        } else {
+            user.setDateOfBirth(user.getDateOfBirth());
+        }
 
         if (USER_CONTROLLER.updateProfile(user)) {
             System.out.println("Successfully updated");
@@ -305,13 +338,25 @@ public class UserView {
     /**
      * Gets the choice from the user
      *
-     * @return Return the choice
+     * @return the choice
      */
     private int getUserChoice() {
         System.out.println("Enter your choice:");
         final String choice = SCANNER.nextLine().trim();
 
         return USER_VALIDATION.checkValidChoice(choice) ? Integer.parseInt(choice) : getUserChoice();
+    }
+
+    /**
+     * Gets the option from the user
+     *
+     * @return the option
+     */
+    private String getUserOption() {
+        System.out.println("Enter your choice:");
+        final String option = SCANNER.nextLine().trim();
+
+        return USER_VALIDATION.isValidOption(option) ? option : getUserOption();
     }
 
     /**
@@ -323,7 +368,7 @@ public class UserView {
         System.out.println("Enter the country code (must include +)");
         final String countryCode = SCANNER.nextLine().trim();
 
-        return USER_VALIDATION.isValidCountryCode(countryCode) ? countryCode : getCountryCode();
+        return countryCode;
     }
 
     /**
@@ -333,6 +378,7 @@ public class UserView {
      */
     private String getValidMobileNumber() {
         System.out.println("Enter the mobile number (must be a digit)");
+        System.out.println("Press * to terminate the entire process");
         final String mobileNumber = SCANNER.nextLine().trim();
 
         return mobileNumber;
@@ -347,6 +393,10 @@ public class UserView {
         final String countryCode = getCountryCode();
         final String mobileNumber = getValidMobileNumber();
 
+        if (runtimeExitStatus(mobileNumber) || runtimeExitStatus(countryCode)) {
+            SCANNER.close();
+            System.exit(0);
+        }
         return USER_VALIDATION.isValidMobileNumber(countryCode, mobileNumber) ? mobileNumber : getMobileNumber();
     }
 
@@ -357,8 +407,13 @@ public class UserView {
      */
     private String getDateOfBirth() {
         System.out.println("Enter the date Of birth(DD-MM-YYYY)");
+        System.out.println("Press * to terminate the entire process");
         final String dateOfBirth = SCANNER.nextLine().trim();
 
+        if (runtimeExitStatus(dateOfBirth)) {
+            SCANNER.close();
+            System.exit(0);
+        }
         return USER_VALIDATION.isDateOfBirthValid(dateOfBirth) ? dateOfBirth : getDateOfBirth();
     }
 
@@ -369,9 +424,21 @@ public class UserView {
      */
     private String getName() {
         System.out.println("Enter user name");
+        System.out.println("Press * to terminate the entire process");
         final String name = SCANNER.nextLine().trim();
 
+        if (runtimeExitStatus(name)) {
+            SCANNER.close();
+            System.exit(0);
+        }
         return USER_VALIDATION.checkName(name) ? name : getName();
+    }
+
+    /**
+     * Exits form the entire process.
+     */
+    private boolean runtimeExitStatus(final String detail) {
+        return detail.contains("*");
     }
 
     /**

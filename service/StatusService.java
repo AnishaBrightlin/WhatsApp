@@ -18,7 +18,7 @@ public interface StatusService {
      * @param status the status object containing the user status
      * @return the status of the user
      */
-    String putStatus(final Status status);
+    boolean putStatus(final Status status);
 
     /**
      * Deletes the status associated with the provided time

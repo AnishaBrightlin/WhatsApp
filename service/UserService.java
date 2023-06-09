@@ -16,14 +16,14 @@ public interface UserService {
      * @param user the user object containing the user details
      * @return Returns the mobile number of the signed-up user
      */
-    String signUp(final User user);
+    boolean signUp(final User user);
 
     /**
      * Retrieves the user details
      *
      * @return Returns the set of user details
      */
-    User getUserDetails(final String mobileNumber);
+    User getUserDetails(final int mobileNumber);
 
     /**
      * Checks the user is already signUp

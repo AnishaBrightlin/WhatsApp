@@ -4,6 +4,7 @@ import com.whatsapp.model.Status;
 import com.whatsapp.service.StatusServiceImpl;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Passes the data between status and the service.
@@ -21,7 +22,7 @@ public class StatusController {
      * @param status the status object containing the user status
      * @return the mobile number of the signed-up user.
      */
-    public String putStatus(final Status status) {
+    public boolean putStatus(final Status status) {
         return STATUS_SERVICE.putStatus(status);
     }
 

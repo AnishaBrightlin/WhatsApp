@@ -14,7 +14,7 @@ public class StatusValidation {
      * @param status the status to validate
      * @return true if the status is valid else false
      */
-    public boolean checkStatusLength(final String status) {
-        return status.matches("^{1,30}$");
+    public boolean isValidStatus(final String status) {
+        return status.matches("^[A-Za-z0-9!@#$%^&*()_+=-]{1,30}$");
     }
 }

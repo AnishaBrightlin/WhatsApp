@@ -2,9 +2,9 @@ package com.whatsapp.view.validation;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 /**
  * Validates the user details
@@ -14,10 +14,6 @@ import java.time.format.DateTimeParseException;
  */
 public class UserValidation {
 
-    public boolean isValidCountryCode(final String countryCode) {
-        return countryCode.matches("^\\+\\d{1,3}$");
-    }
-
     /**
      * Validates the user mobile number
      *
@@ -25,19 +21,22 @@ public class UserValidation {
      * @return true if the mobile number is valid else false
      */
     public boolean isValidMobileNumber(final String countryCode, final String mobileNumber) {
+        if (countryCode.matches("^\\+\\d{1,3}$")) {
 
-        if (countryCode.equals("+93")) {
-            return mobileNumber.matches("^0\\d{9}$");
-        } else if (countryCode.equals("+91")) {
-            return mobileNumber.matches("[6-9]\\d{9}");
-        } else if (countryCode.equals("+61")) {
-            return mobileNumber.matches("04\\d{8}");
-        } else if (countryCode.equals("+1")) {
-            return mobileNumber.matches("[4-8]\\d{9}");
-        } else if (countryCode.equals("+299")) {
-            return mobileNumber.matches("[0-9]{6}");
+            switch (countryCode) {
+                case "+93":
+                    return mobileNumber.matches("^0\\d{9}$");
+                case "+91":
+                    return mobileNumber.matches("[6-9]\\d{9}");
+                case "+61":
+                    return mobileNumber.matches("04\\d{8}");
+                case "+1":
+                    return mobileNumber.matches("[4-8]\\d{9}");
+                case "+299":
+                    return mobileNumber.matches("[0-9]{6}");
+            }
+            return false;
         }
-
         return false;
     }
 
@@ -49,6 +48,16 @@ public class UserValidation {
      */
     public boolean checkValidChoice(final String choice) {
         return choice.matches("[\\d]");
+    }
+
+    /**
+     * Validates the user option
+     *
+     * @param option the choice to validate
+     * @return true if the choice is valid else false
+     */
+    public boolean isValidOption(final String option) {
+        return option.matches("^[Y|y]|[N|n]");
     }
 
     /**
@@ -68,30 +77,21 @@ public class UserValidation {
      * @return true if the date of birth is valid else false
      */
     public boolean isDateOfBirthValid(final String dateOfBirth) {
+
         try {
-            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+                    .withResolverStyle(ResolverStyle.STRICT);
             final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
             final int currentYear = LocalDate.now().getYear();
 
             if (date.getYear() < 1940 || date.getYear() > currentYear) {
                 return false;
             }
-            final int maxDayOfMonth = date.getMonth().maxLength();
-            final int birthDate = date.getDayOfMonth();
 
-            /*if (date.getMonth() == Month.FEBRUARY) {
-                final boolean isLeapYear = Year.of(date.getYear()).isLeap();
-                final int maxDayOfFebruary = isLeapYear ? 29 : 28;
-
-                if (date.getDayOfMonth() >= maxDayOfFebruary) {
-                    return false;
-                }
-            }*/
-
-            if (birthDate <= maxDayOfMonth) {
+            if (date.getDayOfMonth() > date.getMonth().maxLength() ||
+                    (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear())) {
                 return false;
             }
-
             return true;
         } catch (final DateTimeParseException exception) {
             return false;
