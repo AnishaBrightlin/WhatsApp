@@ -1,7 +1,6 @@
 package com.whatsapp.view.validation;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -21,6 +20,7 @@ public class UserValidation {
      * @return true if the mobile number is valid else false
      */
     public boolean isValidMobileNumber(final String countryCode, final String mobileNumber) {
+
         if (countryCode.matches("^\\+\\d{1,3}$")) {
 
             switch (countryCode) {
@@ -87,14 +87,10 @@ public class UserValidation {
             if (date.getYear() < 1940 || date.getYear() > currentYear) {
                 return false;
             }
-
-            if (date.getDayOfMonth() > date.getMonth().maxLength() ||
-                    (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear())) {
-                return false;
-            }
             return true;
         } catch (final DateTimeParseException exception) {
             return false;
         }
+
     }
 }

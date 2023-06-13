@@ -1,10 +1,13 @@
 package com.whatsapp.model;
 
+import java.util.List;
+
 /**
- * Represents the user
+ * Represents a basic entity for storing information about a user. It contains the user details such as id,
+ * mobile number, name and status. Providing getters and setters for accessing and modifying its properties.
  *
+ * @author Anisha Brightlin
  * @version 1.0
- * @author Anisha brightlin
  */
 public class User {
 
@@ -12,12 +15,13 @@ public class User {
     private String dateOfBirth;
     private String name;
     private String about;
-    private Status status;
-    private int id;
+    private List<Status> status;
+    private long id;
 
-    public void setId(final int id) {
+    public void setId(final long id) {
         this.id = id;
     }
+
     public void setMobileNumber(final String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
@@ -34,7 +38,7 @@ public class User {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -50,11 +54,11 @@ public class User {
         return dateOfBirth;
     }
 
-    public void setStatus(final Status status) {
+    public void setStatus(final List<Status> status) {
         this.status = status;
     }
 
-    public Status getStatus() {
+    public List<Status> getStatus() {
         return status;
     }
 

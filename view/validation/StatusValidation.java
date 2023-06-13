@@ -9,12 +9,12 @@ package com.whatsapp.view.validation;
 public class StatusValidation {
 
     /**
-     * Validates the status length
+     * Validates the status caption
      *
-     * @param status the status to validate
-     * @return true if the status is valid else false
+     * @param caption the caption to validate
+     * @return true if the caption is valid else false
      */
-    public boolean isValidStatus(final String status) {
-        return status.matches("^[A-Za-z0-9!@#$%^&*()_+=-]{1,30}$");
+    public boolean checkValidCaption(final String caption) {
+        return caption.matches("^[\\sA-Za-z0-9!@#$%^&*()_+=-]{1,3000}$");
     }
 }

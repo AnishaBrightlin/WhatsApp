@@ -3,6 +3,7 @@ package com.whatsapp.service;
 import com.whatsapp.model.Status;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Defines the behavior of status service
@@ -13,18 +14,34 @@ import java.util.Date;
 public interface StatusService {
 
     /**
-     * Appends all the status into the list
+     * Appends all the status into the list.
      *
      * @param status the status object containing the user status
      * @return the status of the user
      */
-    boolean putStatus(final Status status);
+    boolean isStatusUploaded(final Status status);
 
     /**
-     * Deletes the status associated with the provided time
+     * Gets the Status of the individual user.
+     *
+     * @param id the id contains the user id
+     * @return list of status
+     */
+    List<Status> getStatus(final long id);
+
+    /**
+     * Gets the list of id who have the status
+     *
+     * @param id the id contains the user id
+     * @return list of id
+     */
+    List<Long> getStatusList(final long id);
+
+    /**
+     * Deletes the status associated with the provided time.
      *
      * @param time the status object to be delete
-     * @return Returns true if the status is deleted successfully else false
+     * @return true if the status is deleted successfully else false
      */
     boolean isExpired(final Date time);
 }
