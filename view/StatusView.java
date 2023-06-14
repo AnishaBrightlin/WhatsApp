@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Handles the functionality related to status. It supports various operations such as uploading status,
- * viewing own status, viewing others' status and navigating back to the home screen.
+ * Handles the functionality related to status. And navigating back to the home screen.
  */
 public class StatusView {
 
@@ -27,7 +26,7 @@ public class StatusView {
     /**
      * Displays the status options menu for a user and handles the navigation based on the user's choice.
      *
-     * @param userId the ID of the user accessing the status menu
+     * @param userId of the user accessing the status menu
      */
     public void goToStatus(final long userId) {
         System.out.println("Enter your choice:\n1.Upload status\n2.View status\n3.View other status\n4.Homepage");
@@ -57,6 +56,8 @@ public class StatusView {
 
     /**
      * Uploads the user status
+     *
+     * @param userId of the current user
      */
     private void upLoadStatus(final long userId) {
         final User user = USER_CONTROLLER.getUserDetail(userId);
@@ -87,27 +88,10 @@ public class StatusView {
      *
      * @return the format of the status
      */
-    private Status.Format getFormat() {
-        System.out.println("Enter the status format:\n1.Text\n2.Links\n3.Gif\n4.Photo\n5.Video\n.6.Voice");
+    private int getFormat() {
+        System.out.println("Enter the status format:\n1.Text\n2.Links\n3.Gif\n4.Photo\n5.Video\n6.Voice");
 
-        switch (getUserChoice()) {
-            case 1:
-                return Status.Format.TEXT;
-            case 2:
-                return Status.Format.LINK;
-            case 3:
-                return Status.Format.GIF;
-            case 4:
-                return Status.Format.PHOTO;
-            case 5:
-                return Status.Format.VIDEO;
-            case 6:
-                return Status.Format.VOICE;
-            default:
-                System.out.println("Enter the valid choice between 1-6");
-                getFormat();
-        }
-        return null;
+        return SCANNER.nextInt();
     }
 
     /**
@@ -124,6 +108,8 @@ public class StatusView {
 
     /**
      * Displays the user status
+     *
+     * @param userId of the user who viewing the status
      */
     private void viewStatus(final long userId) {
         final List<Status> userStatus = STATUS_CONTROLLER.getStatus(userId);
@@ -138,6 +124,8 @@ public class StatusView {
 
     /**
      * Views the other's status
+     *
+     * @param userId of the user who viewing the others status
      */
     private void viewOthersStatus(final long userId) {
         System.out.println("Whose status do you want to view");

@@ -3,8 +3,7 @@ package com.whatsapp.model;
 import java.util.Date;
 
 /**
- * Denotes the status of a user. It encompasses details such as id, status caption, timestamp and an optional
- * accompanying message.
+ * Denotes the status of a user.
  *
  * @author Anisha Brightlin
  * @version 1.0
@@ -21,11 +20,36 @@ public class Status {
      * Describes the status format.
      */
     public enum Format {
-        TEXT, LINK, GIF, PHOTO, VIDEO, VOICE
+        TEXT(1), LINK(2), GIF(3), PHOTO(4), VIDEO(5), VOICE(6);
+        private int value;
+
+        Format(final int value) {
+            this.value = value;
+        }
     }
 
-    public void setFormat(final Format format) {
-        this.format = format;
+    public void setFormat(final int userChoice) {
+        this.format = getFormatFromUser(userChoice);
+    }
+
+    private Format getFormatFromUser(final int userChoice) {
+
+        switch (userChoice) {
+            case 1:
+                return Format.TEXT;
+            case 2:
+                return Format.LINK;
+            case 3:
+                return Format.GIF;
+            case 4:
+                return Format.PHOTO;
+            case 5:
+                return Format.VIDEO;
+            case 6:
+                return Format.VOICE;
+            default:
+                return null;
+        }
     }
 
     public void setCaption(final String caption) {

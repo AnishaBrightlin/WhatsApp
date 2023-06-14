@@ -11,7 +11,7 @@ public class StatusValidation {
     /**
      * Validates the status caption
      *
-     * @param caption the caption to validate
+     * @param caption to validate
      * @return true if the caption is valid else false
      */
     public boolean checkValidCaption(final String caption) {

@@ -19,7 +19,7 @@ public class StatusController {
     /**
      * Puts a new status with the provided status object.
      *
-     * @param status the status object containing the user status
+     * @param status object containing the user status
      * @return true if the status is added to the list else false.
      */
     public boolean isUpload(final Status status) {
@@ -29,7 +29,7 @@ public class StatusController {
     /**
      * Gets a new status with the provided user id.
      *
-     * @param id the user id
+     * @param id represents the user
      * @return the status list of the signed-up user.
      */
     public List<Status> getStatus(final long id) {
@@ -37,17 +37,19 @@ public class StatusController {
     }
 
     /**
-     * Gets the status list
-     * @param id the user id
+     * Gets the status list.
+     *
+     * @param id represents the user
      * @return the list of status how have the status
      */
     public List<Long> getStatusList(final long id) {
         return STATUS_SERVICE.getStatusList(id);
     }
+
     /**
-     * Checks the given time is expired or not
+     * Checks the given time is expired or not.
      *
-     * @param time the time containing the status expire time
+     * @param time containing the status uploaded time
      * @return true if the status is expired else false
      */
     public boolean isExpired(final Date time) {

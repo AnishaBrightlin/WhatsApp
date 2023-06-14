@@ -80,6 +80,8 @@ public class UserView {
 
     /**
      * Views profiles and status of the user.
+     *
+     * @param id of the current user
      */
     public void viewHomeScreen(final long id) {
         System.out.println("Enter your choice:\n1.Go to profile\n2.Upload status\n3.Get contact list\n4.Exit");
@@ -105,6 +107,8 @@ public class UserView {
     /**
      * Navigates to the status view and displays the status screen.
      * After viewing the status, returns to the home screen.
+     *
+     * @param id of the current user
      */
     private void goToStatus(final long id) {
         final StatusView statusView = new StatusView();
@@ -115,6 +119,8 @@ public class UserView {
 
     /**
      * Displays, updates and deletes the user details
+     *
+     * @param id of the current user
      */
     private void viewProfile(final long id) {
         System.out.println("Enter your choice:\n1.Display profile\n2.Update profile\n3.Delete account\n4.Home page");
@@ -175,6 +181,8 @@ public class UserView {
 
     /**
      * Displays the user details
+     *
+     * @param id of the current user
      */
     private void displayProfileDetails(final long id) {
         System.out.println(USER_CONTROLLER.getUserDetail(id));
@@ -182,6 +190,8 @@ public class UserView {
 
     /**
      * Deletes the user account
+     *
+     * @param id of the current user
      */
     private void deleteAccount(final long id) {
         System.out.println("Deleting your account is permanent. Your data cannot recovered. Press 1 to delete 2 to exit");
@@ -208,6 +218,8 @@ public class UserView {
 
     /**
      * Updates the user details
+     *
+     * @param id of the current user
      */
     private void updateProfile(final long id) {
         final User user = USER_CONTROLLER.getUserDetail(id);
@@ -321,6 +333,8 @@ public class UserView {
 
     /**
      * Exits the current process.
+     *
+     * @return true if the input contains the exit string, else false
      */
     private boolean backToMenu(final String detail) {
         return detail.contains("*");
@@ -329,6 +343,7 @@ public class UserView {
     /**
      * Verifies the mobile number that's already sign up or not
      *
+     * @param mobileNumber of the user
      * @return true if the mobile number is already sign up else false
      */
     private boolean isExistingMobileNumber(final String mobileNumber) {

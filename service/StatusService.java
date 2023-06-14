@@ -16,7 +16,7 @@ public interface StatusService {
     /**
      * Appends all the status into the list.
      *
-     * @param status the status object containing the user status
+     * @param status object containing the user status
      * @return the status of the user
      */
     boolean isStatusUploaded(final Status status);
@@ -24,7 +24,7 @@ public interface StatusService {
     /**
      * Gets the Status of the individual user.
      *
-     * @param id the id contains the user id
+     * @param id contains the user id
      * @return list of status
      */
     List<Status> getStatus(final long id);
@@ -32,7 +32,7 @@ public interface StatusService {
     /**
      * Gets the list of id who have the status
      *
-     * @param id the id contains the user id
+     * @param id contains the user id
      * @return list of id
      */
     List<Long> getStatusList(final long id);
@@ -40,7 +40,7 @@ public interface StatusService {
     /**
      * Deletes the status associated with the provided time.
      *
-     * @param time the status object to be delete
+     * @param time represents the status uploaded time
      * @return true if the status is deleted successfully else false
      */
     boolean isExpired(final Date time);

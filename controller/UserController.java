@@ -17,7 +17,7 @@ public class UserController {
     /**
      * Signs up a new user with the provided user object.
      *
-     * @param user the user object containing the user details
+     * @param user object containing the user details
      * @return the mobile number of the signed-up user.
      */
     public boolean signUp(final User user) {
@@ -27,6 +27,7 @@ public class UserController {
     /**
      * Retrieves the collection of user details.
      *
+     * @param id Represents the user
      * @return user details
      */
     public User getUserDetail(final long id) {
@@ -36,7 +37,7 @@ public class UserController {
     /**
      * Retrieves the id for the given mobile number
      *
-     * @param mobileNumber of the user object ti check
+     * @param mobileNumber of the user object to check
      * @return the id
      */
     public long getUserId(final String mobileNumber) {
@@ -46,7 +47,7 @@ public class UserController {
     /**
      * Checks if a user is signed in.
      *
-     * @param mobileNumber the user object to check
+     * @param mobileNumber of the user
      * @return true if the user is signed in else false
      */
     public boolean isSignIn(final String mobileNumber) {
@@ -56,7 +57,7 @@ public class UserController {
     /**
      * Updates the user details with the provided user object.
      *
-     * @param user the user object containing the updated user details
+     * @param user object containing the updated user details
      * @return the updated profile
      */
     public boolean isUpdateProfile(final User user) {
@@ -64,9 +65,9 @@ public class UserController {
     }
 
     /**
-     * Deletes the user account associated with the provided mobile number.
+     * Deletes the user account associated with the provided id.
      *
-     * @param currentId the mobile number of the user account to delete
+     * @param currentId of the user
      * @return true if the account is deleted else false
      */
     public boolean deleteAccount(final long currentId) {

@@ -3,8 +3,7 @@ package com.whatsapp.model;
 import java.util.List;
 
 /**
- * Represents a basic entity for storing information about a user. It contains the user details such as id,
- * mobile number, name and status. Providing getters and setters for accessing and modifying its properties.
+ * Represents a basic entity for storing information about a user.
  *
  * @author Anisha Brightlin
  * @version 1.0

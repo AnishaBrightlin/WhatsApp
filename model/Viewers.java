@@ -21,6 +21,7 @@ public class Viewers {
     public long getStatusId() {
         return statusId;
     }
+
     public List<Long> getViewersList() {
         return viewersList;
     }

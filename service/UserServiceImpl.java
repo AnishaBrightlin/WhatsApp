@@ -4,13 +4,14 @@ import com.whatsapp.model.User;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
- * Implements the service interface and provides the whatsApp functionality
+ * Implements the user service interface and provides the whatsApp functionality
  *
- * @see com.whatsapp.service.UserService
  * @author Anisha Brightlin
  * @version 1.0
+ * @see com.whatsapp.service.UserService
  */
 public class UserServiceImpl implements UserService {
 
@@ -18,7 +19,8 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
-     * @param user the user object containing the user details
+     *
+     * @param user object containing the user details
      * @return true if the user is added to the list else false
      */
     public boolean signUp(final User user) {
@@ -27,11 +29,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     *
      * @param mobileNumber get the id from the mobile number
-     * @return userId
+     * @return userId of the current user
      */
     public long getUserId(final String mobileNumber) {
-        for (final User user : userSet) {
+        final Iterator<User> iterator = userSet.iterator();
+
+        while (iterator.hasNext()) {
+            final User user = iterator.next();
 
             if (user.getMobileNumber().equals(mobileNumber)) {
                 return user.getId();
@@ -42,12 +48,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
-     * @param mobileNumber the user object to check
+     *
+     * @param mobileNumber of the user object to check
      * @return true if the mobile number is already exist in the list else false
      */
     public boolean signIn(final String mobileNumber) {
+        final Iterator<User> iterator = userSet.iterator();
 
-        for (final User user : userSet) {
+        while (iterator.hasNext()) {
+            final User user = iterator.next();
 
             if (user.getMobileNumber().equals(mobileNumber)) {
                 return true;
@@ -58,12 +67,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
-     * @param id
+     *
+     * @param id of the current user
      * @return the user object
      */
     public User getUserDetails(final long id) {
+        final Iterator<User> iterator = userSet.iterator();
 
-        for (User user : userSet) {
+        while (iterator.hasNext()) {
+            final User user = iterator.next();
 
             if (user.getId() == id) {
                 return user;
@@ -74,15 +86,18 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
-     * @param user the user object containing the updated user details
+     *
+     * @param user object containing the updated user details
      * @return true if the user object is updated else false
      */
     public boolean isUpdateProfile(final User user) {
+        final Iterator<User> iterator = userSet.iterator();
 
-        for (final User existingUser : userSet) {
+        while (iterator.hasNext()) {
+            final User existingUser = iterator.next();
 
             if (existingUser.getMobileNumber().equals(user.getMobileNumber())) {
-                existingUser.setName(existingUser.getName());
+                existingUser.setName(user.getName());
                 existingUser.setDateOfBirth(user.getDateOfBirth());
 
                 return true;
@@ -93,7 +108,8 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
-     * @param currentId the mobile number of the user account to delete
+     *
+     * @param currentId of the user account to delete
      * @return true if the given user id is existing in the list else false
      */
     public boolean deleteAccount(final long currentId) {
