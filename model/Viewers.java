@@ -3,7 +3,7 @@ package com.whatsapp.model;
 import java.util.List;
 
 /**
- * Denotes the Views for each status
+ * Represents the Views for each status
  */
 public class Viewers {
 

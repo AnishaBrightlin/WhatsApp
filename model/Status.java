@@ -3,7 +3,7 @@ package com.whatsapp.model;
 import java.util.Date;
 
 /**
- * Denotes the status of a user.
+ * Represents the status of a user.
  *
  * @author Anisha Brightlin
  * @version 1.0
