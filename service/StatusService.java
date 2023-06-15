@@ -25,9 +25,9 @@ public interface StatusService {
      * Gets the Status of the individual user.
      *
      * @param id contains the user id
-     * @return list of status
+     * @return status object
      */
-    List<Status> getStatus(final long id);
+    Status getStatus(final long id);
 
     /**
      * Gets the list of id who have the status
@@ -35,7 +35,15 @@ public interface StatusService {
      * @param id contains the user id
      * @return list of id
      */
-    List<Long> getStatusList(final long id);
+    List<Long> getStatusIdList(final long id);
+
+    /**
+     * Gets the status id of the given user id
+     *
+     * @param othersId represents the other user
+     * @return list of status id
+     */
+    List<Long> getStatusId(final long othersId);
 
     /**
      * Deletes the status associated with the provided time.

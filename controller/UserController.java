@@ -27,7 +27,7 @@ public class UserController {
     /**
      * Retrieves the collection of user details.
      *
-     * @param id Represents the user
+     * @param id describes the user id
      * @return user details
      */
     public User getUserDetail(final long id) {
@@ -37,7 +37,7 @@ public class UserController {
     /**
      * Retrieves the id for the given mobile number
      *
-     * @param mobileNumber of the user object to check
+     * @param mobileNumber defines the mobile number of the user
      * @return the id
      */
     public long getUserId(final String mobileNumber) {
@@ -47,7 +47,7 @@ public class UserController {
     /**
      * Checks if a user is signed in.
      *
-     * @param mobileNumber of the user
+     * @param mobileNumber describes the user mobile number
      * @return true if the user is signed in else false
      */
     public boolean isSignIn(final String mobileNumber) {
@@ -57,7 +57,7 @@ public class UserController {
     /**
      * Updates the user details with the provided user object.
      *
-     * @param user object containing the updated user details
+     * @param user object represents the updated user details
      * @return the updated profile
      */
     public boolean isUpdateProfile(final User user) {
@@ -67,7 +67,7 @@ public class UserController {
     /**
      * Deletes the user account associated with the provided id.
      *
-     * @param currentId of the user
+     * @param currentId represents the current user
      * @return true if the account is deleted else false
      */
     public boolean deleteAccount(final long currentId) {

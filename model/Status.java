@@ -1,6 +1,7 @@
 package com.whatsapp.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Represents the status of a user.
@@ -15,6 +16,7 @@ public class Status {
     private long id;
     private Format format;
     private long userId;
+    private List<Viewers> viewersList;
 
     /**
      * Describes the status format.
@@ -68,6 +70,10 @@ public class Status {
         this.id = id;
     }
 
+    public void setViewersList(final List<Viewers> viewersList) {
+        this.viewersList = viewersList;
+    }
+
     public Format getFormat() {
         return format;
     }
@@ -86,6 +92,10 @@ public class Status {
 
     public long getId() {
         return id;
+    }
+
+    public List<Viewers> getViewersList() {
+        return viewersList;
     }
 
     public String toString() {

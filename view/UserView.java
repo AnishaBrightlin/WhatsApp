@@ -7,7 +7,7 @@ import com.whatsapp.view.validation.UserValidation;
 import java.util.Scanner;
 
 /**
- * Allows, users to sign up, sign in, view and update their profiles, and delete their accounts.
+ * Handles the functionality related to users.
  *
  * @author Anisha Brightlin
  * @version 1.0

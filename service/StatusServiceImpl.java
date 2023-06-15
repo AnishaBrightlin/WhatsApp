@@ -34,7 +34,26 @@ public class StatusServiceImpl implements StatusService {
      * @param id contains the user id
      * @return the list of status
      */
-    public List<Status> getStatus(final long id) {
+    public Status getStatus(final long id) {
+        final Iterator<Status> iterator = statusList.iterator();
+
+        while (iterator.hasNext()) {
+            final Status status = iterator.next();
+
+            if (status.getUserId() == id) {
+                return status;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the list of status id
+     *
+     * @param id represents the status id
+     * @return the list of status
+     */
+    public List<Status> getStatusList(final long id) {
         final List<Status> userStatus = new ArrayList<>();
         final Iterator<Status> iterator = statusList.iterator();
 
@@ -51,21 +70,60 @@ public class StatusServiceImpl implements StatusService {
     /**
      * {@inheritDoc}
      *
-     * @param id contains the user id
+     * @param id represents the user id
      * @return the list of id who have the status
      */
-    public List<Long> getStatusList(final long id) {
+    public List<Long> getStatusIdList(final long id) {
         final List<Long> userStatus = new ArrayList<>();
         final Iterator<Status> iterator = statusList.iterator();
 
         while (iterator.hasNext()) {
             final Status status = iterator.next();
 
-            if (id != status.getUserId() && status != null) {
+            if (status != null && id != status.getUserId()) {
                 userStatus.add(status.getUserId());
             }
         }
         return userStatus;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param otherId represents the other user
+     * @return the list of status id
+     */
+    public List<Long> getStatusId(final long otherId) {
+        final List<Long> statusId = new ArrayList<>();
+        final Iterator<Status> iterator = statusList.iterator();
+
+        while (iterator.hasNext()) {
+            final Status status = iterator.next();
+
+            if (otherId == status.getUserId()) {
+                statusId.add(status.getId());
+            }
+        }
+        return statusId;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param statusId represents the status id
+     * @return the status object
+     */
+    public Status getOthersStatus(final long statusId) {
+        final Iterator<Status> iterator = statusList.iterator();
+
+        while (iterator.hasNext()) {
+            final Status status = iterator.next();
+
+            if (statusId == status.getId()) {
+                return status;
+            }
+        }
+        return null;
     }
 
     /**

@@ -2,8 +2,10 @@ package com.whatsapp.view;
 
 import com.whatsapp.controller.StatusController;
 import com.whatsapp.controller.UserController;
+import com.whatsapp.controller.ViewersController;
 import com.whatsapp.model.Status;
 import com.whatsapp.model.User;
+import com.whatsapp.model.Viewers;
 import com.whatsapp.view.validation.StatusValidation;
 import com.whatsapp.view.validation.UserValidation;
 
@@ -20,8 +22,10 @@ public class StatusView {
     private static final UserValidation USER_VALIDATION = new UserValidation();
     private static final StatusController STATUS_CONTROLLER = new StatusController();
     private static final UserController USER_CONTROLLER = new UserController();
+    private static final ViewersController VIEWERS_CONTROLLER = new ViewersController();
     private static final Scanner SCANNER = new Scanner(System.in);
     private static long statusId = 1;
+    private static long viewersId = 1;
 
     /**
      * Displays the status options menu for a user and handles the navigation based on the user's choice.
@@ -80,7 +84,7 @@ public class StatusView {
             System.out.println("Something went wrong retry");
             upLoadStatus(userId);
         }
-        user.setStatus(STATUS_CONTROLLER.getStatus(userId));
+        user.setStatus(STATUS_CONTROLLER.getStatusList(userId));
     }
 
     /**
@@ -112,14 +116,7 @@ public class StatusView {
      * @param userId of the user who viewing the status
      */
     private void viewStatus(final long userId) {
-        final List<Status> userStatus = STATUS_CONTROLLER.getStatus(userId);
-
-        for (Status status : userStatus) {
-            System.out.println("Status id: " + status.getId());
-            System.out.println("Caption: " + status.getCaption());
-            System.out.println("Format: " + status.getFormat());
-            System.out.println("Date: " + status.getStatusTime());
-        }
+        System.out.println(STATUS_CONTROLLER.getStatus(userId));
     }
 
     /**
@@ -128,26 +125,49 @@ public class StatusView {
      * @param userId of the user who viewing the others status
      */
     private void viewOthersStatus(final long userId) {
+        final Viewers viewers = new Viewers();
+        final Calendar calender = Calendar.getInstance();
+
         System.out.println("Whose status do you want to view");
-        final List<Long> userStatus = STATUS_CONTROLLER.getStatusList(userId);
+        final List<Long> userStatus = STATUS_CONTROLLER.getStatusIdList(userId);
 
-        for (Long status : userStatus) {
-            System.out.println("Status id: " + status);
+        for (final Long statusId : userStatus) {
+            System.out.println("User id: " + statusId);
         }
-        System.out.println("Enter the other user id");
-        final int choice = SCANNER.nextInt();
+        System.out.println("Enter the user id that you want to view");
+        final long othersId = SCANNER.nextLong();
 
-        Status status = new Status();
+        System.out.println("The status ids are" + STATUS_CONTROLLER.getStatusId(othersId));
+        System.out.println("Enter the status id ");
+        final long statusId = SCANNER.nextLong();
 
-        if (STATUS_CONTROLLER.isExpired(status.getStatusTime())) {
-            status = null;
+        System.out.println("The status is" + STATUS_CONTROLLER.getOthersStatus(statusId));
+        viewers.setCurrentUserId(userId);
+        viewers.setStatusId(statusId);
+        viewers.setTime(calender.getTime());
+        viewers.setViewersId(viewersId++);
+        viewers.setOtherUser(othersId);
 
-            System.out.println("Status has expired and has been deleted.");
+        if (VIEWERS_CONTROLLER.isStatusViewed(viewers)) {
+            System.out.println("Viewed..");
         } else {
-            System.out.println(status);
-            //System.out.println("Status is still within the 24-hour limit.");
+            System.out.println("Something went wrong retry");
+            viewOthersStatus(userId);
         }
     }
+
+    //TODO move these below statements to another method
+    //Status status = new Status();
+
+    //if (STATUS_CONTROLLER.isExpired(status.getStatusTime())) {
+    //status = null;
+
+    //System.out.println("Status has expired and has been deleted.");
+    // } else {
+    //System.out.println(status);
+    //System.out.println("Status is still within the 24-hour limit.");
+    //}
+
 
     /**
      * Gets the choice from the user
