@@ -3,9 +3,11 @@ package com.whatsapp.view;
 import com.whatsapp.controller.StatusController;
 import com.whatsapp.controller.UserController;
 import com.whatsapp.controller.ViewersController;
+
 import com.whatsapp.model.Status;
 import com.whatsapp.model.User;
 import com.whatsapp.model.Viewers;
+
 import com.whatsapp.view.validation.StatusValidation;
 import com.whatsapp.view.validation.UserValidation;
 
@@ -14,23 +16,30 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Handles the functionality related to status. And navigating back to the home screen.
+ * <p>
+ * Handles the functionality related to {@link Status}.
+ * </p>
+ *
+ * @author Anisha Brightlin
+ * @version 1.0
  */
 public class StatusView {
 
-    private static final StatusValidation STATUS_VALIDATION = new StatusValidation();
-    private static final UserValidation USER_VALIDATION = new UserValidation();
-    private static final StatusController STATUS_CONTROLLER = new StatusController();
-    private static final UserController USER_CONTROLLER = new UserController();
-    private static final ViewersController VIEWERS_CONTROLLER = new ViewersController();
+    private static final StatusValidation STATUS_VALIDATION = StatusValidation.getInstance();
+    private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
+    private static final StatusController STATUS_CONTROLLER = StatusController.getInstance();
+    private static final UserController USER_CONTROLLER = UserController.getInstance();
+    private static final ViewersController VIEWERS_CONTROLLER = ViewersController.getInstance();
     private static final Scanner SCANNER = new Scanner(System.in);
     private static long statusId = 1;
     private static long viewersId = 1;
 
     /**
-     * Displays the status options menu for a user and handles the navigation based on the user's choice.
+     * <p>
+     * Displays the status menu for a user.
+     * </p>
      *
-     * @param userId of the user accessing the status menu
+     * @param userId Represents the {@link User} id
      */
     public void goToStatus(final long userId) {
         System.out.println("Enter your choice:\n1.Upload status\n2.View status\n3.View other status\n4.Homepage");
@@ -41,7 +50,7 @@ public class StatusView {
                 goToStatus(userId);
                 break;
             case 2:
-                viewStatus(userId);
+                displayStatus(userId);
                 goToStatus(userId);
                 break;
             case 3:
@@ -59,9 +68,11 @@ public class StatusView {
     }
 
     /**
-     * Uploads the user status
+     * <p>
+     * Uploads the user {@link Status}
+     * </p>
      *
-     * @param userId of the current user
+     * @param userId Represents the {@link User} id
      */
     private void upLoadStatus(final long userId) {
         final User user = USER_CONTROLLER.getUserDetail(userId);
@@ -88,9 +99,11 @@ public class StatusView {
     }
 
     /**
-     * Gets the format of the user.
+     * <p>
+     * Gets the format.
+     * </p>
      *
-     * @return the format of the status
+     * @return the format number
      */
     private int getFormat() {
         System.out.println("Enter the status format:\n1.Text\n2.Links\n3.Gif\n4.Photo\n5.Video\n6.Voice");
@@ -99,9 +112,11 @@ public class StatusView {
     }
 
     /**
-     * Gets the caption from the user.
+     * <p>
+     * Gets the caption.
+     * </p>
      *
-     * @return caption if the caption is valid else again get the caption
+     * @return the caption
      */
     private String getCaption() {
         System.out.println("Enter the caption");
@@ -111,18 +126,24 @@ public class StatusView {
     }
 
     /**
-     * Displays the user status
+     * <p>
+     * Displays the {@link Status} for the provided user id
+     * </p>
      *
-     * @param userId of the user who viewing the status
+     * @param userId Represents the user id
      */
-    private void viewStatus(final long userId) {
+    private void displayStatus(final long userId) {
         System.out.println(STATUS_CONTROLLER.getStatus(userId));
+        System.out.println("The Status viewers are");
+
     }
 
     /**
+     * <p>
      * Views the other's status
+     * </p>
      *
-     * @param userId of the user who viewing the others status
+     * @param userId Represents the {@link User} id
      */
     private void viewOthersStatus(final long userId) {
         final Viewers viewers = new Viewers();
@@ -170,7 +191,9 @@ public class StatusView {
 
 
     /**
-     * Gets the choice from the user
+     * <p>
+     * Gets the choice.
+     * </p>
      *
      * @return the choice
      */
@@ -178,11 +201,13 @@ public class StatusView {
         System.out.println("Enter your choice:");
         final String choice = SCANNER.nextLine().trim();
 
-        return USER_VALIDATION.checkValidChoice(choice) ? Integer.parseInt(choice) : getUserChoice();
+        return USER_VALIDATION.isValidChoice(choice) ? Integer.parseInt(choice) : getUserChoice();
     }
 
     /**
-     * Gets the option from the user
+     * <p>
+     * Gets the option.
+     * </p>
      *
      * @return the option
      */

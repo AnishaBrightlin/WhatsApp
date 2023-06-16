@@ -7,30 +7,50 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Provides the status functionality.
+ * <p>
+ * Provides the {@link Viewers} functionalities.
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
  */
 public class ViewersServiceImpl {
 
+    private static final ViewersServiceImpl VIEWERS_SERVICE = new ViewersServiceImpl();
     private final List<Viewers> viewersList = new ArrayList<>();
 
+    private ViewersServiceImpl() {}
+
     /**
-     * Puts a new viewers with the provided viewers object.
+     * <p>
+     * Gets the instance of the class.
+     * </p>
      *
-     * @param viewers represents the viewers
-     * @return true if the viewers is added to teh list else false
+     * @return the {@link UserService} instance.
+     */
+    public static ViewersServiceImpl getInstance() {
+        return VIEWERS_SERVICE;
+    }
+
+    /**
+     * <p>
+     * Checks if the status is viewed.
+     * </p>
+     *
+     * @param viewers Represents the {@link Viewers}
+     * @return true if the status is viewed else false
      */
     public boolean isStatusViewed(final Viewers viewers) {
         return viewersList.add(viewers);
     }
 
     /**
-     * Gets the status of the respective status id
+     * <p>
+     * Gets the {@link Viewers} for the provided status id.
+     * </p>
      *
-     * @param statusId represents the status id
-     * @return the list of viewers
+     * @param statusId Represents the status id
+     * @return the {@link List} of {@link Viewers}
      */
     public List<Viewers> getStatusViewers(final long statusId) {
         final List<Viewers> userView = new ArrayList<>();

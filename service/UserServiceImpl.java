@@ -1,5 +1,6 @@
 package com.whatsapp.service;
 
+import com.whatsapp.controller.StatusController;
 import com.whatsapp.model.User;
 
 import java.util.Set;
@@ -7,7 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /**
- * Implements the user service interface and provides the whatsApp functionality
+ * Provides the {@link User} functionalities.
  *
  * @author Anisha Brightlin
  * @version 1.0
@@ -15,13 +16,26 @@ import java.util.Iterator;
  */
 public class UserServiceImpl implements UserService {
 
+    private static final UserService USER_SERVICE = new UserServiceImpl();
     private final Set<User> userSet = new HashSet<>();
+
+    private UserServiceImpl() {}
+
+    /**
+     * <p>
+     * Gets the instance of the class.
+     *</p>
+     * @return the {@link UserService} instance.
+     */
+    public static UserService getInstance() {
+        return USER_SERVICE;
+    }
 
     /**
      * {@inheritDoc}
      *
-     * @param user object containing the user details
-     * @return true if the user is added to the list else false
+     * @param user Represents the {@link User}
+     * @return true if the user is sign in else false
      */
     public boolean signUp(final User user) {
         return userSet.add(user);
@@ -30,8 +44,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param mobileNumber get the id from the mobile number
-     * @return userId of the current user
+     * @param mobileNumber Represents the user's mobile number
+     * @return the id of the {@link User}
      */
     public long getUserId(final String mobileNumber) {
         final Iterator<User> iterator = userSet.iterator();
@@ -49,8 +63,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param mobileNumber of the user object to check
-     * @return true if the mobile number is already exist in the list else false
+     * @param mobileNumber Represents the user's mobile number
+     * @return true if the mobile number is already sign in else false
      */
     public boolean signIn(final String mobileNumber) {
         final Iterator<User> iterator = userSet.iterator();
@@ -68,8 +82,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param id of the current user
-     * @return the user object
+     * @param id Represents the {@link User} id
+     * @return the {@link User}
      */
     public User getUserDetails(final long id) {
         final Iterator<User> iterator = userSet.iterator();
@@ -87,8 +101,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param user object containing the updated user details
-     * @return true if the user object is updated else false
+     * @param user Represents the {@link User}
+     * @return true if the profile is updated else false
      */
     public boolean isUpdateProfile(final User user) {
         final Iterator<User> iterator = userSet.iterator();
@@ -109,8 +123,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param currentId of the user account to delete
-     * @return true if the given user id is existing in the list else false
+     * @param currentId Represents the {@link User} id.
+     * @return true if the account is deleted else false
      */
     public boolean deleteAccount(final long currentId) {
         return userSet.removeIf(user -> user.getId() == currentId);

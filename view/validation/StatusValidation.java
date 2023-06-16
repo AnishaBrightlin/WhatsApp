@@ -1,5 +1,7 @@
 package com.whatsapp.view.validation;
 
+import com.whatsapp.service.UserService;
+
 /**
  * Validates the user status
  *
@@ -8,10 +10,25 @@ package com.whatsapp.view.validation;
  */
 public class StatusValidation {
 
+    private static final StatusValidation STATUS_VALIDATION = new StatusValidation();
+
+    private StatusValidation() {}
+
+    /**
+     * <p>
+     * Gets the instance of the class.
+     * </p>
+     *
+     * @return the {@link StatusValidation} instance.
+     */
+    public static StatusValidation getInstance() {
+        return STATUS_VALIDATION;
+    }
+
     /**
      * Validates the status caption
      *
-     * @param caption to validate
+     * @param caption Represents the caption
      * @return true if the caption is valid else false
      */
     public boolean checkValidCaption(final String caption) {

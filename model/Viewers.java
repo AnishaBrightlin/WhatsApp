@@ -12,7 +12,7 @@ public class Viewers {
 
     private long statusId;
     private long currentUserId;
-    private long viewersId;
+    private long id;
     private Date time;
     private long otherUser;
 
@@ -21,7 +21,7 @@ public class Viewers {
     }
 
     public void setViewersId(final long viewersId) {
-        this.viewersId = viewersId;
+        this.id = viewersId;
     }
 
     public void setStatusId(final long statusId) {
@@ -49,7 +49,7 @@ public class Viewers {
     }
 
     public long getViewersId() {
-        return viewersId;
+        return id;
     }
 
     public long getOtherUser() {
@@ -57,6 +57,6 @@ public class Viewers {
     }
 
     public String toString() {
-        return String.format("%s %s %s %s %s", currentUserId, viewersId, statusId, otherUser, time);
+        return String.format("%s %s %s %s %s", currentUserId, id, statusId, otherUser, time);
     }
 }

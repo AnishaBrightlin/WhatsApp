@@ -3,7 +3,9 @@ package com.whatsapp.service;
 import com.whatsapp.model.User;
 
 /**
- * Defines the behavior of whatsApp service
+ * <p>
+ * Provides the functionalities of {@link User} service
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
@@ -11,49 +13,62 @@ import com.whatsapp.model.User;
 public interface UserService {
 
     /**
-     * Registers the new user into the application.
+     * <p>
+     * Signs up the new {@link User} into the application.
+     * </p>
      *
-     * @param user the user object containing the user details
-     * @return the mobile number of the signed-up user
+     * @param user Represents the {@link User}
+     * @return true if user is sign up else false
      */
     boolean signUp(final User user);
 
     /**
-     * Retrieves the user details.
+     * <p>
+     * Gets the {@link User} details for the given id.
+     * </p>
      *
-     * @return the set of user details
+     * @param id Represents the {@link User} id
+     * @return the {@link User}
      */
     User getUserDetails(final long id);
 
     /**
+     * <p>
      * Signs in a user with the given mobile number.
+     * </p>
      *
-     * @param mobileNumber the user object to check
-     * @return true if the user is already exist else false
+     * @param mobileNumber Represents the {@link User} mobile number
+     * @return true if the user is already sign in else false
      */
     boolean signIn(final String mobileNumber);
 
     /**
-     * Updates the user details with the provided user object.
+     * <p>
+     * Updates the user profile with the provided {@link User}.
+     * </p>
      *
-     * @param user object containing the updated user details
+     * @param user Represents the {@link User}
      * @return true if the profile is updated else false.
      */
     boolean isUpdateProfile(final User user);
 
     /**
-     * Deletes the user account associated with the provided mobile number.
+     * <p>
+     * Deletes the {@link User} account associated with the provided id.
+     * </p>
      *
-     * @param currentId the mobile number of the user account to delete
-     * @return true if the account is deleted successfully else false
+     * @param currentId Represents the {@link User} id
+     * @return true if the account is deleted else false
      */
     boolean deleteAccount(final long currentId);
 
     /**
-     * Retrieves the current user id
+     * <p>
+     * Gets the current user id
+     * </p>
      *
-     * @param mobileNumber get the id from the mobile number
-     * @return id of the current user
+     * @param mobileNumber Represents the user's mobile number
+     * @return id of the {@link User}
      */
     long getUserId(final String mobileNumber);
 }

@@ -7,17 +7,19 @@ import com.whatsapp.view.validation.UserValidation;
 import java.util.Scanner;
 
 /**
- * Handles the functionality related to users.
+ * <p>
+ * Handles the functionality related to {@link User}.
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
  */
 public class UserView {
 
-    private static final UserController USER_CONTROLLER = new UserController();
-    private static final UserValidation USER_VALIDATION = new UserValidation();
+    private static final UserController USER_CONTROLLER = UserController.getInstance();
+    private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String YES = "y";
+    private static final String YES = "yes";
     private static long id = 1;
     private static final String[] PREDEFINED_ABOUT_OPTIONS = {
             "Online class",
@@ -28,8 +30,9 @@ public class UserView {
     };
 
     /**
-     * Prompts the user for sign up or exit and performs the corresponding action.
-     * This method uses recursion to handle invalid choices.
+     * <p>
+     * Prompts the user to sign up
+     * </p>
      */
     private void signUp() {
         System.out.println("Enter 1 for sign up and 2 for exit");
@@ -63,7 +66,9 @@ public class UserView {
     }
 
     /**
-     * Performs the sign-in operation if the mobile number is existing.
+     * <p>
+     * Performs the sign-in operation.
+     * </p>
      */
     private void signIn() {
         System.out.println("For mobile number verification");
@@ -79,12 +84,14 @@ public class UserView {
     }
 
     /**
-     * Views profiles and status of the user.
+     * <p>
+     * Views the home screen.
+     * </p>
      *
-     * @param id of the current user
+     * @param id Represents the user id
      */
     public void viewHomeScreen(final long id) {
-        System.out.println("Enter your choice:\n1.Go to profile\n2.Upload status\n3.Get contact list\n4.Exit");
+        System.out.println("Enter your choice:\n1.View profile\n2.Go to status page\n3.Menu");
 
         switch (getUserChoice()) {
             case 1:
@@ -92,10 +99,10 @@ public class UserView {
                 viewHomeScreen(id);
                 break;
             case 2:
-                goToStatus(id);
+                goToStatusPage(id);
                 viewHomeScreen(id);
                 break;
-            case 4:
+            case 3:
                 getMenuChoice();
                 break;
             default:
@@ -105,25 +112,14 @@ public class UserView {
     }
 
     /**
-     * Navigates to the status view and displays the status screen.
-     * After viewing the status, returns to the home screen.
+     * <p>
+     * Views the profile page
+     * </p>
      *
-     * @param id of the current user
-     */
-    private void goToStatus(final long id) {
-        final StatusView statusView = new StatusView();
-
-        statusView.goToStatus(id);
-        viewHomeScreen(id);
-    }
-
-    /**
-     * Displays, updates and deletes the user details
-     *
-     * @param id of the current user
+     * @param id Represents the user id
      */
     private void viewProfile(final long id) {
-        System.out.println("Enter your choice:\n1.Display profile\n2.Update profile\n3.Delete account\n4.Home page");
+        System.out.println("Enter your choice:\n1.Display profile details\n2.Update profile\n3.Delete account\n4.Home screen");
 
         switch (getUserChoice()) {
             case 1:
@@ -148,9 +144,91 @@ public class UserView {
     }
 
     /**
-     * Sets about the user.
+     * <p>
+     * Displays the profile details
+     * </p>
      *
-     * @return the user about
+     * @param id Represents the user id
+     */
+    private void displayProfileDetails(final long id) {
+        System.out.println(USER_CONTROLLER.getUserDetail(id));
+    }
+
+    /**
+     * <p>
+     * Updates the profile.
+     * </p>
+     *
+     * @param id Represents the user id
+     */
+    private void updateProfile(final long id) {
+        final User user = USER_CONTROLLER.getUserDetail(id);
+
+        System.out.println("If you want to update the name enter yes/y else No/n");
+        user.setName(((getUserOption().equalsIgnoreCase(YES)) || (getUserOption().equalsIgnoreCase("y")))
+                ? getName() : user.getName());
+        System.out.println("If you want to update the date of birth enter yes/y else no/n");
+        user.setDateOfBirth(((getUserOption().equalsIgnoreCase(YES)) || (getUserOption().equalsIgnoreCase("y")))
+                ? getDateOfBirth() : user.getDateOfBirth());
+
+        if (USER_CONTROLLER.isUpdateProfile(user)) {
+            System.out.println("Successfully updated");
+        } else {
+            System.out.println("Retry");
+            updateProfile(id);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes the account with the provided id.
+     * </p>
+     *
+     * @param id Represents the user id
+     */
+    private void deleteAccount(final long id) {
+        System.out.println("Deleting your account is permanent. Your data cannot recovered. Press 1 to delete 2 to exit");
+
+        switch (getUserChoice()) {
+            case 1:
+
+                if (USER_CONTROLLER.deleteAccount(id)) {
+                    System.out.println("Account is deleted");
+                    getMenuChoice();
+                } else {
+                    System.out.println("Enter the valid mobile number");
+                    deleteAccount(id);
+                }
+                break;
+            case 2:
+                viewProfile(id);
+                break;
+            default:
+                System.out.println("Enter the valid choice 1 or 2");
+                deleteAccount(id);
+        }
+    }
+
+    /**
+     * <p>
+     * Navigates to the status page.
+     * </p>
+     *
+     * @param id Represents the user id
+     */
+    private void goToStatusPage(final long id) {
+        final StatusView statusView = new StatusView();
+
+        statusView.goToStatus(id);
+        viewHomeScreen(id);
+    }
+
+    /**
+     * <p>
+     * Sets the user about.
+     * </p>
+     *
+     * @return the {@link User} about
      */
     private String setAbout() {
         System.out.println("Press 1 for predefined about and press 2 for custom about");
@@ -180,65 +258,9 @@ public class UserView {
     }
 
     /**
-     * Displays the user details
-     *
-     * @param id of the current user
-     */
-    private void displayProfileDetails(final long id) {
-        System.out.println(USER_CONTROLLER.getUserDetail(id));
-    }
-
-    /**
-     * Deletes the user account
-     *
-     * @param id of the current user
-     */
-    private void deleteAccount(final long id) {
-        System.out.println("Deleting your account is permanent. Your data cannot recovered. Press 1 to delete 2 to exit");
-
-        switch (getUserChoice()) {
-            case 1:
-
-                if (USER_CONTROLLER.deleteAccount(id)) {
-                    System.out.println("Account is deleted");
-                    getMenuChoice();
-                } else {
-                    System.out.println("Enter the valid mobile number");
-                    deleteAccount(id);
-                }
-                break;
-            case 2:
-                viewProfile(id);
-                break;
-            default:
-                System.out.println("Enter the valid choice 1 or 2");
-                deleteAccount(id);
-        }
-    }
-
-    /**
-     * Updates the user details
-     *
-     * @param id of the current user
-     */
-    private void updateProfile(final long id) {
-        final User user = USER_CONTROLLER.getUserDetail(id);
-
-        System.out.println("If you want to update the name enter Y/y else N/n");
-        user.setName(getUserOption().equalsIgnoreCase(YES) ? getName() : user.getName());
-        System.out.println("If you want to update the date of birth enter Y/y else N/n");
-        user.setDateOfBirth(getUserOption().equalsIgnoreCase(YES) ? getDateOfBirth() : user.getDateOfBirth());
-
-        if (USER_CONTROLLER.isUpdateProfile(user)) {
-            System.out.println("Successfully updated");
-        } else {
-            System.out.println("Retry");
-            updateProfile(id);
-        }
-    }
-
-    /**
-     * Gets the choice from the user
+     * <p>
+     * Gets the {@link User} choice
+     * </p>
      *
      * @return the choice
      */
@@ -246,13 +268,15 @@ public class UserView {
         System.out.println("Enter your choice:");
         final String choice = SCANNER.nextLine().trim();
 
-        return USER_VALIDATION.checkValidChoice(choice) ? Integer.parseInt(choice) : getUserChoice();
+        return USER_VALIDATION.isValidChoice(choice) ? Integer.parseInt(choice) : getUserChoice();
     }
 
     /**
-     * Gets the option from the user
+     * <p>
+     * Gets the option.
+     * </p>
      *
-     * @return the option
+     * @return the {@link String} option
      */
     private String getUserOption() {
         System.out.println("Enter your choice:");
@@ -262,9 +286,11 @@ public class UserView {
     }
 
     /**
-     * Gets the country code
+     * <p>
+     * Gets the country code.
+     * </p>
      *
-     * @return the country code
+     * @return the {@link String} country code
      */
     private String getCountryCode() {
         System.out.println("Enter the country code (must include +)");
@@ -273,9 +299,11 @@ public class UserView {
     }
 
     /**
-     * Gets the valid mobile number of the user
+     * <p>
+     * Gets the valid mobile number.
+     * </p>
      *
-     * @return the mobile number
+     * @return the {@link String} mobile number
      */
     private String getValidMobileNumber() {
         System.out.println("Enter the mobile number (must be a digit)");
@@ -285,9 +313,11 @@ public class UserView {
     }
 
     /**
-     * Validates the mobile number with respect to country code.
+     * <p>
+     * Gets the mobile number.
+     * </p>
      *
-     * @return the mobile number
+     * @return the {@link String} mobile number
      */
     private String getMobileNumber() {
         final String countryCode = getCountryCode();
@@ -300,9 +330,11 @@ public class UserView {
     }
 
     /**
+     * <p>
      * Gets the Date of birth of the user
+     * </p>
      *
-     * @return Returns the date of birth
+     * @return the date of birth
      */
     private String getDateOfBirth() {
         System.out.println("Enter the date Of birth(DD-MM-YYYY)");
@@ -312,13 +344,15 @@ public class UserView {
         if (backToMenu(dateOfBirth)) {
             getMenuChoice();
         }
-        return USER_VALIDATION.isDateOfBirthValid(dateOfBirth) ? dateOfBirth : getDateOfBirth();
+        return USER_VALIDATION.isValidDateOfBirth(dateOfBirth) ? dateOfBirth : getDateOfBirth();
     }
 
     /**
+     * <p>
      * Gets the name of the user
+     * </p>
      *
-     * @return Returns the name
+     * @return the name
      */
     private String getName() {
         System.out.println("Enter user name");
@@ -328,11 +362,13 @@ public class UserView {
         if (backToMenu(name)) {
             getMenuChoice();
         }
-        return USER_VALIDATION.checkName(name) ? name : getName();
+        return USER_VALIDATION.isValidateName(name) ? name : getName();
     }
 
     /**
+     * <p>
      * Exits the current process.
+     * </p>
      *
      * @return true if the input contains the exit string, else false
      */
@@ -341,9 +377,11 @@ public class UserView {
     }
 
     /**
-     * Verifies the mobile number that's already sign up or not
+     * <p>
+     * Checks the mobile number is already exist with the provided mobile number
+     * </p>
      *
-     * @param mobileNumber of the user
+     * @param mobileNumber Represents the user mobile number
      * @return true if the mobile number is already sign up else false
      */
     private boolean isExistingMobileNumber(final String mobileNumber) {
@@ -358,7 +396,9 @@ public class UserView {
     }
 
     /**
-     * Allows the user to perform the signUp or signIn process.
+     * <p>
+     * Gets the menu choice from the user.
+     * </p>
      */
     private void getMenuChoice() {
         System.out.println("Enter the choice:\n1.Sign up\n2.Sign in\n3.Exit");

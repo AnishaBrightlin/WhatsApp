@@ -6,17 +6,36 @@ import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
 /**
+ * <p>
  * Validates the user details
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
  */
 public class UserValidation {
 
+    private static final UserValidation USER_VALIDATION = new UserValidation();
+
+    private UserValidation() {}
+
     /**
-     * Determines if the specified mobile number is valid for the specified country code.
+     * <p>
+     * Gets the instance of the class.
+     * </p>
      *
-     * @param mobileNumber to validate
+     * @return the {@link UserValidation} instance.
+     */
+    public static UserValidation getInstance() {
+        return USER_VALIDATION;
+    }
+
+    /**
+     * <p>
+     * Validates the mobile number
+     * </p>
+     *
+     * @param mobileNumber Represents the user mobile number
      * @return true if the mobile number is valid else false
      */
     public boolean isValidMobileNumber(final String countryCode, final String mobileNumber) {
@@ -41,42 +60,50 @@ public class UserValidation {
     }
 
     /**
+     * <p>
      * Validates the user choice
+     * </p>
      *
-     * @param choice to validate
+     * @param choice Represents the user choice
      * @return true if the choice is valid else false
      */
-    public boolean checkValidChoice(final String choice) {
+    public boolean isValidChoice(final String choice) {
         return choice.matches("[\\d]");
     }
 
     /**
+     * <p>
      * Validates the user option
+     * </p>
      *
-     * @param option to validate
-     * @return true if the choice is valid else false
+     * @param option Represents the user option
+     * @return true if the option is valid else false
      */
     public boolean isValidOption(final String option) {
-        return option.matches("^[Y|y]|[N|n]");
+        return option.matches("(?i)^(yes|no|y|n)$");//[Y|y]|[N|n]$");
     }
 
     /**
+     * <p>
      * Validates the userName
+     * </p>
      *
-     * @param name to validate
+     * @param name Represents the username
      * @return true if the name is valid else false
      */
-    public boolean checkName(final String name) {
+    public boolean isValidateName(final String name) {
         return name.matches("^[A-Za-z0-9\\s]+$");
     }
 
     /**
+     * <p>
      * Validates the user date of birth
+     * </p>
      *
-     * @param dateOfBirth to validate (in the format DD-MM-YYYY)
+     * @param dateOfBirth Represents the user date of birth
      * @return true if the date of birth is valid else false
      */
-    public boolean isDateOfBirthValid(final String dateOfBirth) {
+    public boolean isValidDateOfBirth(final String dateOfBirth) {
 
         try {
             final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")

@@ -1,69 +1,106 @@
 package com.whatsapp.controller;
 
 import com.whatsapp.model.Status;
+import com.whatsapp.service.StatusService;
 import com.whatsapp.service.StatusServiceImpl;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Passes the data between status and the service.
+ * <p>
+ * Controls the {@link Status} related operation.
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
  */
 public class StatusController {
 
-    private static final StatusServiceImpl STATUS_SERVICE = new StatusServiceImpl();
+    private static final StatusController STATUS_CONTROLLER = new StatusController();
+    private static final StatusService STATUS_SERVICE = StatusServiceImpl.getInstance();
+
+    private StatusController() {
+    }
 
     /**
-     * Puts a new status with the provided status object.
+     * <p>
+     * Gets the instance of the class.
+     * </p>
      *
-     * @param status object represents the user status
-     * @return true if the status is added to the list else false.
+     * @return the {@link StatusController} instance.
+     */
+    public static StatusController getInstance() {
+        return STATUS_CONTROLLER;
+    }
+
+    /**
+     * <p>
+     * Uploads a new status with the provided {@link Status}.
+     * </p>
+     *
+     * @param status Represents the user {@link Status}
+     * @return true if the {@link Status} is uploaded else false.
      */
     public boolean isUpload(final Status status) {
         return STATUS_SERVICE.isStatusUploaded(status);
     }
 
     /**
-     * Gets a new status with the provided user id.
+     * <p>
+     * Gets a new {@link Status} with the provided user id.
+     * </p>
      *
-     * @param id represents the user
-     * @return the status list of the signed-up user.
+     * @param id Represents the user
+     * @return the {@link Status} of the current user.
      */
     public Status getStatus(final long id) {
         return STATUS_SERVICE.getStatus(id);
     }
 
+    /**
+     * <p>
+     * Gets the list of {@link Status}
+     * </p>
+     *
+     * @param id Represents the {@link Status} id
+     * @return the list of {@link Status}
+     */
     public List<Status> getStatusList(final long id) {
         return STATUS_SERVICE.getStatusList(id);
     }
+
     /**
-     * Gets the status list.
+     * <p>
+     * Gets the list of {@link Status} id.
+     * </p>
      *
-     * @param id represents the user
-     * @return the list of status how have the status
+     * @param id Represents the user
+     * @return the list of {@link Status} id who have the status
      */
     public List<Long> getStatusIdList(final long id) {
         return STATUS_SERVICE.getStatusIdList(id);
     }
 
     /**
+     * <p>
      * Gets the status id of the respective given id
+     * </p>
      *
-     * @param othersId represents the other user
-     * @return the list of status id
+     * @param othersId Represents the other user
+     * @return the list of {@link Status} id
      */
     public List<Long> getStatusId(final long othersId) {
         return STATUS_SERVICE.getStatusId(othersId);
     }
 
     /**
-     * Gets the others status
+     * <p>
+     * Gets the others {@link Status}
+     * </p>
      *
-     * @param statusId represents the status id
-     * @return the status of the given status id
+     * @param statusId Represents the {@link Status} id
+     * @return the {@link Status}
      */
     public Status getOthersStatus(final long statusId) {
         return STATUS_SERVICE.getOthersStatus(statusId);
@@ -72,7 +109,7 @@ public class StatusController {
     /**
      * Checks the given time is expired or not.
      *
-     * @param time represents the status uploaded time
+     * @param time Represents the status uploaded time
      * @return true if the status is expired else false
      */
     public boolean isExpired(final Date time) {

@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * <p>
  * Represents the status of a user.
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
