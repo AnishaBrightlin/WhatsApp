@@ -165,10 +165,14 @@ public class UserView {
         final User user = USER_CONTROLLER.getUserDetail(id);
 
         System.out.println("If you want to update the name enter yes/y else No/n");
-        user.setName(((getUserOption().equalsIgnoreCase(YES)) || (getUserOption().equalsIgnoreCase("y")))
+        String userOption = getUserOption();
+
+        user.setName(((userOption.equalsIgnoreCase(YES)) || userOption.equalsIgnoreCase("y"))
                 ? getName() : user.getName());
         System.out.println("If you want to update the date of birth enter yes/y else no/n");
-        user.setDateOfBirth(((getUserOption().equalsIgnoreCase(YES)) || (getUserOption().equalsIgnoreCase("y")))
+        userOption = getUserOption();
+
+        user.setDateOfBirth(((userOption.equalsIgnoreCase(YES)) || (userOption.equalsIgnoreCase("y")))
                 ? getDateOfBirth() : user.getDateOfBirth());
 
         if (USER_CONTROLLER.isUpdateProfile(user)) {

@@ -83,5 +83,5 @@ public interface StatusService {
      * @param time Represents the {@link Status} uploaded time
      * @return true if the status time after the current time else false
      */
-    boolean isExpired(final Date time);
+    boolean isStatusExpired(final Date time);
 }

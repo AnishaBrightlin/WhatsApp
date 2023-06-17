@@ -1,5 +1,7 @@
 package com.whatsapp.model;
 
+import com.whatsapp.exception.FormatException;
+
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class Status {
         this.format = getFormatFromUser(userChoice);
     }
 
-    private Format getFormatFromUser(final int userChoice) {
+    private Format getFormatFromUser(final int userChoice) throws FormatException {
 
         switch (userChoice) {
             case 1:
@@ -52,8 +54,13 @@ public class Status {
             case 6:
                 return Format.VOICE;
             default:
-                return null;
+                try {
+                    throw new FormatException("Enter the choice between 1-6");
+                } catch (FormatException formatException) {
+                    System.out.println(formatException);
+                }
         }
+        return null;
     }
 
     public void setCaption(final String caption) {

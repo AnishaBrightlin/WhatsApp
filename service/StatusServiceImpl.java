@@ -73,14 +73,30 @@ public class StatusServiceImpl implements StatusService {
         final List<Status> userStatus = new ArrayList<>();
         final Iterator<Status> iterator = statusList.iterator();
 
-        while (iterator.hasNext()) {
-            final Status status = iterator.next();
+        if (isIdExist(id)) {
 
-            if (status.getUserId() == id) {
-                userStatus.add(status);
+            while (iterator.hasNext()) {
+                final Status status = iterator.next();
+
+                if (id == status.getUserId()) {
+                    userStatus.add(status);
+                }
             }
         }
         return userStatus;
+    }
+
+    public boolean isIdExist(final long id) {
+        final Iterator<Status> iterator = statusList.iterator();
+
+        while (iterator.hasNext()) {
+            final Status status = iterator.next();
+
+           if (id == status.getUserId()) {
+               return true;
+           }
+        }
+        return false;
     }
 
     /**
@@ -113,11 +129,14 @@ public class StatusServiceImpl implements StatusService {
         final List<Long> statusId = new ArrayList<>();
         final Iterator<Status> iterator = statusList.iterator();
 
-        while (iterator.hasNext()) {
-            final Status status = iterator.next();
+        if (isIdExist(otherId)) {
 
-            if (otherId == status.getUserId()) {
-                statusId.add(status.getId());
+            while (iterator.hasNext()) {
+                final Status status = iterator.next();
+
+                if (otherId == status.getUserId()) {
+                    statusId.add(status.getId());
+                }
             }
         }
         return statusId;
@@ -148,7 +167,7 @@ public class StatusServiceImpl implements StatusService {
      * @param time Represents the uploaded time
      * @return true if the status time is after the current time else false
      */
-    public boolean isExpired(final Date time) {
+    public boolean isStatusExpired(final Date time) {
         final Date currentTime = new Date();
 
         return currentTime.after(time);

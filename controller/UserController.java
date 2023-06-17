@@ -18,12 +18,14 @@ public class UserController {
     private static final UserController USER_CONTROLLER = new UserController();
     private static final UserService SERVICE = UserServiceImpl.getInstance();
 
-    private UserController() {}
+    private UserController() {
+    }
 
     /**
      * <p>
      * Gets the instance of the class.
-     *</p>
+     * </p>
+     *
      * @return the {@link UserController} instance.
      */
     public static UserController getInstance() {

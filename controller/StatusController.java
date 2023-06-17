@@ -113,6 +113,6 @@ public class StatusController {
      * @return true if the status is expired else false
      */
     public boolean isExpired(final Date time) {
-        return STATUS_SERVICE.isExpired(time);
+        return STATUS_SERVICE.isStatusExpired(time);
     }
 }

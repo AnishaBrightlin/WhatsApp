@@ -18,12 +18,14 @@ public class ViewersController {
     private static final ViewersServiceImpl VIEWERS_SERVICE = ViewersServiceImpl.getInstance();
     private static final ViewersController VIEWERS_CONTROLLER = new ViewersController();
 
-    private ViewersController() {}
+    private ViewersController() {
+    }
 
     /**
      * <p>
      * Gets the instance of the class.
-     *</p>
+     * </p>
+     *
      * @return the {@link ViewersController} instance.
      */
     public static ViewersController getInstance() {
