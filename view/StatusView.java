@@ -134,7 +134,6 @@ public class StatusView {
         return getFormat();
     }
 
-
     /**
      * <p>
      * Gets the caption.
@@ -210,7 +209,6 @@ public class StatusView {
         final String othersId = SCANNER.nextLine();
 
         if (STATUS_CONTROLLER.isIdExist(Long.parseLong(othersId))) {
-
             System.out.println("There are " + STATUS_CONTROLLER.getStatusId(Long.parseLong(othersId)) + " status");
             final List<Status> otherStatus = STATUS_CONTROLLER.getStatusList(Long.parseLong(othersId));
 
@@ -233,7 +231,6 @@ public class StatusView {
         viewers.setTime(calender.getTime());
         viewers.setViewersId(viewersId++);
         viewers.setOtherUser(Long.parseLong(othersId));
-
 
         if (VIEWERS_CONTROLLER.isStatusViewed(viewers)) {
             System.out.println("Viewed..");

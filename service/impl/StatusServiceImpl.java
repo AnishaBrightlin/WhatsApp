@@ -120,7 +120,6 @@ public class StatusServiceImpl implements StatusService {
         return userStatus;
     }
 
-
     /**
      * {@inheritDoc}
      *
@@ -167,6 +166,7 @@ public class StatusServiceImpl implements StatusService {
      * @return true if the status time is after the current time else false
      */
     public boolean isStatusExpired(final Date time) {
+
         final Date currentTime = new Date();
 
         return currentTime.after(time);

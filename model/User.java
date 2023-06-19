@@ -3,7 +3,9 @@ package com.whatsapp.model;
 import java.util.List;
 
 /**
+ * <p>
  * Represents a basic entity for storing information about a user.
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0

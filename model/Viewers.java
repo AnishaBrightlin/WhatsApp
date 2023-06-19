@@ -3,7 +3,9 @@ package com.whatsapp.model;
 import java.util.Date;
 
 /**
+ * <p>
  * Represents the Views for each status
+ * </p>
  *
  * @author Anisha Brightlin
  * @version 1.0
@@ -31,6 +33,10 @@ public class Viewers {
         this.otherUser = otherUser;
     }
 
+    public long getOtherUser() {
+        return otherUser;
+    }
+
     public long getCurrentUserId() {
         return currentUserId;
     }
@@ -41,10 +47,6 @@ public class Viewers {
 
     public long getViewersId() {
         return id;
-    }
-
-    public long getOtherUser() {
-        return otherUser;
     }
 
     public String toString() {

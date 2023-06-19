@@ -66,6 +66,14 @@ public class Status {
         this.id = id;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
     public void setViewersList(final List<User> viewersList) {
         this.viewersList = viewersList;
     }
@@ -80,14 +88,6 @@ public class Status {
 
     public Date getStatusTime() {
         return uploadedTime;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public List<User> getViewersList() {
