@@ -88,7 +88,7 @@ public class StatusView {
         status.setStatusId(statusId++);
         status.setUserId(userId);
         status.setUploadedTime(calender.getTime());
-        System.out.println("Want to add caption if yes press y or yes");
+        System.out.println("Want to add caption if yes press y or yes else no or n");
         String userOption = getUserOption();
 
         if (userOption.equalsIgnoreCase(YES) || userOption.equalsIgnoreCase("y")) {
