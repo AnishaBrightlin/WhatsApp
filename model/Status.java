@@ -16,7 +16,7 @@ import java.util.List;
 public class Status {
 
     private String caption;
-    private Date time;
+    private Date uploadedTime;
     private long id;
     private Format format;
     private long userId;
@@ -35,7 +35,9 @@ public class Status {
         }
 
         public static Format get(int userChoice) throws FormatException {
+
             for (final Format format : Format.values()) {
+
                 if (format.value == userChoice) {
                     return format;
                 }
@@ -56,8 +58,8 @@ public class Status {
         this.userId = userId;
     }
 
-    public void setTime(final Date time) {
-        this.time = time;
+    public void setUploadedTime(final Date uploadedTime) {
+        this.uploadedTime = uploadedTime;
     }
 
     public void setStatusId(final long id) {
@@ -77,7 +79,7 @@ public class Status {
     }
 
     public Date getStatusTime() {
-        return time;
+        return uploadedTime;
     }
 
     public long getUserId() {
@@ -93,6 +95,6 @@ public class Status {
     }
 
     public String toString() {
-        return String.format("%x %s %s %s", id, format, caption, time);
+        return String.format("StatusId: %x Format: %s Caption: %s UploadedTime: %s", id, format, caption, uploadedTime);
     }
 }

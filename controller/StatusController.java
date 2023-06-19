@@ -49,19 +49,7 @@ public class StatusController {
 
     /**
      * <p>
-     * Gets a new {@link Status} with the provided user id.
-     * </p>
-     *
-     * @param id Represents the user
-     * @return the {@link Status} of the current user.
-     */
-    public Status getStatus(final long id) {
-        return STATUS_SERVICE.getStatus(id);
-    }
-
-    /**
-     * <p>
-     * Gets the list of {@link Status}
+     * Gets the list of {@link Status}.
      * </p>
      *
      * @param id Represents the {@link Status} id
@@ -85,7 +73,7 @@ public class StatusController {
 
     /**
      * <p>
-     * Gets the status id of the respective given id
+     * Gets the status id of the respective given id.
      * </p>
      *
      * @param othersId Represents the other user
@@ -96,17 +84,11 @@ public class StatusController {
     }
 
     /**
-     * <p>
-     * Gets the others {@link Status}
-     * </p>
+     * Checks the id is existed or not.
      *
-     * @param statusId Represents the {@link Status} id
-     * @return the {@link Status}
+     * @param otherId Represents the other user
+     * @return true if the id is existed else false
      */
-    public Status getOthersStatus(final long statusId) {
-        return STATUS_SERVICE.getOthersStatus(statusId);
-    }
-
     public boolean isIdExist(final long otherId) {
         return STATUS_SERVICE.isIdExist(otherId);
     }

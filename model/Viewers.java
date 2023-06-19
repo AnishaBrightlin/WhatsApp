@@ -10,7 +10,6 @@ import java.util.Date;
  */
 public class Viewers {
 
-    private long statusId;
     private long currentUserId;
     private long id;
     private Date time;
@@ -24,20 +23,12 @@ public class Viewers {
         this.id = viewersId;
     }
 
-    public void setStatusId(final long statusId) {
-        this.statusId = statusId;
-    }
-
     public void setTime(final Date time) {
         this.time = time;
     }
 
     public void setOtherUser(final long otherUser) {
         this.otherUser = otherUser;
-    }
-
-    public long getStatusId() {
-        return statusId;
     }
 
     public long getCurrentUserId() {
@@ -57,6 +48,6 @@ public class Viewers {
     }
 
     public String toString() {
-        return String.format("%s %s %s %s %s", currentUserId, id, statusId, otherUser, time);
+        return String.format("No: %s ViewerId: %s Time: %s", id, currentUserId, time);
     }
 }

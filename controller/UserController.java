@@ -7,7 +7,7 @@ import com.whatsapp.service.UserService;
 
 /**
  * <p>
- * Controls the user related operation
+ * Controls the {@link User} related operation.
  * </p>
  *
  * @author Anisha brightlin

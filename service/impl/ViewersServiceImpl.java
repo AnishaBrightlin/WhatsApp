@@ -1,10 +1,12 @@
 package com.whatsapp.service.impl;
 
+import com.whatsapp.model.User;
 import com.whatsapp.model.Viewers;
+
 import com.whatsapp.service.UserService;
+import com.whatsapp.service.ViewersService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -15,12 +17,13 @@ import java.util.List;
  * @author Anisha Brightlin
  * @version 1.0
  */
-public class ViewersServiceImpl {
+public class ViewersServiceImpl implements ViewersService {
 
     private static final ViewersServiceImpl VIEWERS_SERVICE = new ViewersServiceImpl();
     private final List<Viewers> viewersList = new ArrayList<>();
 
-    private ViewersServiceImpl() {}
+    private ViewersServiceImpl() {
+    }
 
     /**
      * <p>
@@ -34,9 +37,7 @@ public class ViewersServiceImpl {
     }
 
     /**
-     * <p>
-     * Checks if the status is viewed.
-     * </p>
+     * {@inheritDoc}
      *
      * @param viewers Represents the {@link Viewers}
      * @return true if the status is viewed else false
@@ -46,21 +47,18 @@ public class ViewersServiceImpl {
     }
 
     /**
-     * <p>
-     * Gets the {@link Viewers} for the provided status id.
-     * </p>
+     * {@inheritDoc}
      *
-     * @param statusId Represents the status id
+     * @param userId Represents the {@link User}
      * @return the {@link List} of {@link Viewers}
      */
-    public List<Viewers> getStatusViewers(final long statusId) {
+    public List<Viewers> getStatusViewers(final long userId) {
+
         final List<Viewers> userView = new ArrayList<>();
-        final Iterator<Viewers> iterator = viewersList.iterator();
 
-        while (iterator.hasNext()) {
-            final Viewers viewers = iterator.next();
+        for (final Viewers viewers : viewersList) {
 
-            if (statusId == viewers.getStatusId()) {
+            if (userId == viewers.getOtherUser()) {
                 userView.add(viewers);
             }
         }

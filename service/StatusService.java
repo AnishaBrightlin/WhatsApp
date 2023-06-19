@@ -27,16 +27,6 @@ public interface StatusService {
 
     /**
      * <p>
-     * Gets the {@link Status} of individual user.
-     * </p>
-     *
-     * @param id Represents the user id
-     * @return the {@link Status}
-     */
-    Status getStatus(final long id);
-
-    /**
-     * <p>
      * Gets the {@link List} of {@link Status} id.
      * </p>
      *
@@ -57,16 +47,6 @@ public interface StatusService {
 
     /**
      * <p>
-     * Gets the others {@link Status} for the given status id
-     * </p>
-     *
-     * @param statusId Represents the {@link Status} id
-     * @return the {@link Status}
-     */
-    Status getOthersStatus(final long statusId);
-
-    /**
-     * <p>
      * Gets the {@link Status}
      * </p>
      *
@@ -75,6 +55,14 @@ public interface StatusService {
      */
     List<Status> getStatusList(final long id);
 
+    /**
+     * <p>
+     * Checks the provided id is existed or not.
+     * </p>
+     *
+     * @param id Represents the user
+     * @return true if the id is present else false.
+     */
     boolean isIdExist(final long id);
 
     /**
@@ -86,4 +74,24 @@ public interface StatusService {
      * @return true if the status time after the current time else false
      */
     boolean isStatusExpired(final Date time);
+
+    /**
+     * <p>
+     * Gets the {@link Status} of individual user.
+     * </p>
+     *
+     * @param id Represents the user id
+     * @return the {@link Status}
+     */
+    Status getStatus(final long id);
+
+    /**
+     * <p>
+     * Gets the others {@link Status} for the given status id
+     * </p>
+     *
+     * @param statusId Represents the {@link Status} id
+     * @return the {@link Status}
+     */
+    Status getOthersStatus(final long statusId);
 }

@@ -5,7 +5,6 @@ import com.whatsapp.service.UserService;
 
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * Provides the {@link User} functionalities.
@@ -19,12 +18,14 @@ public class UserServiceImpl implements UserService {
     private static final UserService USER_SERVICE = new UserServiceImpl();
     private final Set<User> userSet = new HashSet<>();
 
-    private UserServiceImpl() {}
+    private UserServiceImpl() {
+    }
 
     /**
      * <p>
      * Gets the instance of the class.
-     *</p>
+     * </p>
+     *
      * @return the {@link UserService} instance.
      */
     public static UserService getInstance() {
@@ -48,10 +49,8 @@ public class UserServiceImpl implements UserService {
      * @return the id of the {@link User}
      */
     public long getUserId(final String mobileNumber) {
-        final Iterator<User> iterator = userSet.iterator();
 
-        while (iterator.hasNext()) {
-            final User user = iterator.next();
+        for (final User user : userSet) {
 
             if (user.getMobileNumber().equals(mobileNumber)) {
                 return user.getId();
@@ -60,6 +59,7 @@ public class UserServiceImpl implements UserService {
         return 0;
     }
 
+
     /**
      * {@inheritDoc}
      *
@@ -67,10 +67,8 @@ public class UserServiceImpl implements UserService {
      * @return true if the mobile number is already sign in else false
      */
     public boolean signIn(final String mobileNumber) {
-        final Iterator<User> iterator = userSet.iterator();
 
-        while (iterator.hasNext()) {
-            final User user = iterator.next();
+        for (final User user : userSet) {
 
             if (user.getMobileNumber().equals(mobileNumber)) {
                 return true;
@@ -86,10 +84,8 @@ public class UserServiceImpl implements UserService {
      * @return the {@link User}
      */
     public User getUserDetails(final long id) {
-        final Iterator<User> iterator = userSet.iterator();
 
-        while (iterator.hasNext()) {
-            final User user = iterator.next();
+        for (final User user : userSet) {
 
             if (user.getId() == id) {
                 return user;
@@ -105,10 +101,8 @@ public class UserServiceImpl implements UserService {
      * @return true if the profile is updated else false
      */
     public boolean isUpdateProfile(final User user) {
-        final Iterator<User> iterator = userSet.iterator();
 
-        while (iterator.hasNext()) {
-            final User existingUser = iterator.next();
+        for (final User existingUser : userSet) {
 
             if (existingUser.getMobileNumber().equals(user.getMobileNumber())) {
                 existingUser.setName(user.getName());

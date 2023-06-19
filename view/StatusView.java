@@ -79,6 +79,7 @@ public class StatusView {
      * @param userId Represents the {@link User} id
      */
     private void upLoadStatus(final long userId) {
+
         final User user = USER_CONTROLLER.getUserDetail(userId);
         final Status status = new Status();
         final Calendar calender = Calendar.getInstance();
@@ -86,7 +87,7 @@ public class StatusView {
         status.setFormat(getFormat());
         status.setStatusId(statusId++);
         status.setUserId(userId);
-        status.setTime(calender.getTime());
+        status.setUploadedTime(calender.getTime());
         System.out.println("Want to add caption if yes press y or yes");
         String userOption = getUserOption();
 
@@ -111,6 +112,7 @@ public class StatusView {
      * @return the format number
      */
     private int getFormat() throws FormatException {
+
         try {
             System.out.println("Enter the status format:\n1.Text\n2.Links\n3.Gif\n4.Photo\n5.Video\n6.Voice");
             final String format = SCANNER.nextLine().trim();
@@ -121,7 +123,7 @@ public class StatusView {
                 if (choice >= 1 && choice <= 6) {
                     return choice;
                 } else {
-                    throw new FormatException("Invalid format choice. Please enter a value between 1-6.");
+                    throw new FormatException("Invalid format choice. Please enter a choice between 1-6.");
                 }
             } else {
                 throw new FormatException("Invalid format choice. Enter the valid format");
@@ -155,6 +157,7 @@ public class StatusView {
      * @param userId Represents the user id
      */
     private void displayStatus(final long userId) {
+
         final User user = USER_CONTROLLER.getUserDetail(userId);
 
         if (user == null || user.getStatus() == null) {
@@ -164,12 +167,20 @@ public class StatusView {
         System.out.println("The statuses are:");
 
         for (final Status status : user.getStatus()) {
+
             try {
                 Thread.sleep(2000);
             } catch (Exception exception) {
-                exception.printStackTrace();
+                System.out.println(exception.getMessage());
             }
             System.out.println(status);
+        }
+
+        if (VIEWERS_CONTROLLER.getViewers(userId).isEmpty()) {
+            System.out.println("No viewers");
+        } else {
+            System.out.println("The status viewers are");
+            System.out.println(VIEWERS_CONTROLLER.getViewers(userId));
         }
     }
 
@@ -181,6 +192,7 @@ public class StatusView {
      * @param userId Represents the {@link User} id
      */
     private void viewOthersStatus(final long userId) {
+
         final Viewers viewers = new Viewers();
         final Calendar calender = Calendar.getInstance();
         final List<Long> userStatus = STATUS_CONTROLLER.getStatusIdList(userId);
@@ -199,16 +211,17 @@ public class StatusView {
 
         if (STATUS_CONTROLLER.isIdExist(Long.parseLong(othersId))) {
 
-            System.out.println("There are" + STATUS_CONTROLLER.getStatusId(Long.parseLong(othersId)) + "status");
+            System.out.println("There are " + STATUS_CONTROLLER.getStatusId(Long.parseLong(othersId)) + " status");
             final List<Status> otherStatus = STATUS_CONTROLLER.getStatusList(Long.parseLong(othersId));
 
             System.out.println("The Status are");
 
             for (final Status status : otherStatus) {
+
                 try {
                     Thread.sleep(2000);
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+                    System.out.println(exception.getMessage());
                 }
                 System.out.println(status);
             }
@@ -221,6 +234,7 @@ public class StatusView {
         viewers.setViewersId(viewersId++);
         viewers.setOtherUser(Long.parseLong(othersId));
 
+
         if (VIEWERS_CONTROLLER.isStatusViewed(viewers)) {
             System.out.println("Viewed..");
         } else {
@@ -228,19 +242,6 @@ public class StatusView {
             viewOthersStatus(userId);
         }
     }
-
-    //TODO move these below statements to another method
-    //Status status = new Status();
-
-    //if (STATUS_CONTROLLER.isExpired(status.getStatusTime())) {
-    //status = null;
-
-    //System.out.println("Status has expired and has been deleted.");
-    // } else {
-    //System.out.println(status);
-    //System.out.println("Status is still within the 24-hour limit.");
-    //}
-
 
     /**
      * <p>

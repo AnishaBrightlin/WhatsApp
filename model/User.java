@@ -66,6 +66,6 @@ public class User {
     }
 
     public String toString() {
-        return String.format("%s %s %s %s ", name, mobileNumber, dateOfBirth, about);
+        return String.format("Name: %s Mobile number: %s Date of birth: %s About: %s ", name, mobileNumber, dateOfBirth, about);
     }
 }

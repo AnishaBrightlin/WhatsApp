@@ -18,7 +18,8 @@ public class UserValidation {
 
     private static final UserValidation USER_VALIDATION = new UserValidation();
 
-    private UserValidation() {}
+    private UserValidation() {
+    }
 
     /**
      * <p>
@@ -39,7 +40,7 @@ public class UserValidation {
      * @param mobileNumber Represents the user mobile number
      * @return true if the mobile number is valid else false
      */
-    public boolean isValidMobileNumber(final String countryCode, final String mobileNumber) {
+   public boolean isValidMobileNumber(final String countryCode, final String mobileNumber) {
 
         if (countryCode.matches("^\\+\\d{1,3}$")) {
 

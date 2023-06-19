@@ -10,7 +10,8 @@ public class StatusValidation {
 
     private static final StatusValidation STATUS_VALIDATION = new StatusValidation();
 
-    private StatusValidation() {}
+    private StatusValidation() {
+    }
 
     /**
      * <p>
