@@ -77,7 +77,7 @@ public class StatusController {
      * </p>
      *
      * @param othersId Represents the other user
-     * @return the list of {@link Status} id
+     * @return {@link Status} id
      */
     public int getStatusId(final long othersId) {
         return STATUS_SERVICE.getStatusId(othersId);
