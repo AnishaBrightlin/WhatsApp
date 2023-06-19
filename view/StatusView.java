@@ -4,6 +4,8 @@ import com.whatsapp.controller.StatusController;
 import com.whatsapp.controller.UserController;
 import com.whatsapp.controller.ViewersController;
 
+import com.whatsapp.exception.FormatException;
+
 import com.whatsapp.model.Status;
 import com.whatsapp.model.User;
 import com.whatsapp.model.Viewers;
@@ -31,6 +33,7 @@ public class StatusView {
     private static final UserController USER_CONTROLLER = UserController.getInstance();
     private static final ViewersController VIEWERS_CONTROLLER = ViewersController.getInstance();
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String YES = "yes";
     private static long statusId = 1;
     private static long viewersId = 1;
 
@@ -59,6 +62,7 @@ public class StatusView {
                 break;
             case 4:
                 final UserView userView = new UserView();
+
                 userView.viewHomeScreen(userId);
                 break;
             default:
@@ -82,12 +86,13 @@ public class StatusView {
         status.setFormat(getFormat());
         status.setStatusId(statusId++);
         status.setUserId(userId);
-        System.out.println("Want to add caption if yes press y");
+        status.setTime(calender.getTime());
+        System.out.println("Want to add caption if yes press y or yes");
+        String userOption = getUserOption();
 
-        if (getUserOption().equalsIgnoreCase("y")) {
+        if (userOption.equalsIgnoreCase(YES) || userOption.equalsIgnoreCase("y")) {
             status.setCaption(getCaption());
         }
-        status.setTime(calender.getTime());
 
         if (STATUS_CONTROLLER.isUpload(status)) {
             System.out.println("Uploaded");
@@ -105,11 +110,28 @@ public class StatusView {
      *
      * @return the format number
      */
-    private int getFormat() {
-        System.out.println("Enter the status format:\n1.Text\n2.Links\n3.Gif\n4.Photo\n5.Video\n6.Voice");
+    private int getFormat() throws FormatException {
+        try {
+            System.out.println("Enter the status format:\n1.Text\n2.Links\n3.Gif\n4.Photo\n5.Video\n6.Voice");
+            final String format = SCANNER.nextLine().trim();
 
-        return SCANNER.nextInt();
+            if (USER_VALIDATION.isValidChoice(format)) {
+                final int choice = Integer.parseInt(format);
+
+                if (choice >= 1 && choice <= 6) {
+                    return choice;
+                } else {
+                    throw new FormatException("Invalid format choice. Please enter a value between 1-6.");
+                }
+            } else {
+                throw new FormatException("Invalid format choice. Enter the valid format");
+            }
+        } catch (FormatException formatException) {
+            System.out.println(formatException.getMessage());
+        }
+        return getFormat();
     }
+
 
     /**
      * <p>
@@ -133,9 +155,22 @@ public class StatusView {
      * @param userId Represents the user id
      */
     private void displayStatus(final long userId) {
-        System.out.println(STATUS_CONTROLLER.getStatus(userId));
-        System.out.println("The Status viewers are");
+        final User user = USER_CONTROLLER.getUserDetail(userId);
 
+        if (user == null || user.getStatus() == null) {
+            System.out.println("No status found for the user.");
+            goToStatus(userId);
+        }
+        System.out.println("The statuses are:");
+
+        for (final Status status : user.getStatus()) {
+            try {
+                Thread.sleep(2000);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            System.out.println(status);
+        }
     }
 
     /**
@@ -148,26 +183,43 @@ public class StatusView {
     private void viewOthersStatus(final long userId) {
         final Viewers viewers = new Viewers();
         final Calendar calender = Calendar.getInstance();
-
-        System.out.println("Whose status do you want to view");
         final List<Long> userStatus = STATUS_CONTROLLER.getStatusIdList(userId);
+
+        if (userStatus.isEmpty()) {
+            System.out.println("There is no status");
+            goToStatus(userId);
+        }
+        System.out.println("Whose status do you want to view");
 
         for (final Long statusId : userStatus) {
             System.out.println("User id: " + statusId);
         }
         System.out.println("Enter the user id that you want to view");
-        final long othersId = SCANNER.nextLong();
+        final String othersId = SCANNER.nextLine();
 
-        System.out.println("The status ids are" + STATUS_CONTROLLER.getStatusId(othersId));
-        System.out.println("Enter the status id ");
-        final long statusId = SCANNER.nextLong();
+        if (STATUS_CONTROLLER.isIdExist(Long.parseLong(othersId))) {
 
-        System.out.println("The status is" + STATUS_CONTROLLER.getOthersStatus(statusId));
+            System.out.println("There are" + STATUS_CONTROLLER.getStatusId(Long.parseLong(othersId)) + "status");
+            final List<Status> otherStatus = STATUS_CONTROLLER.getStatusList(Long.parseLong(othersId));
+
+            System.out.println("The Status are");
+
+            for (final Status status : otherStatus) {
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                System.out.println(status);
+            }
+        } else {
+            System.out.println("Enter the valid user id");
+            viewOthersStatus(userId);
+        }
         viewers.setCurrentUserId(userId);
-        viewers.setStatusId(statusId);
         viewers.setTime(calender.getTime());
         viewers.setViewersId(viewersId++);
-        viewers.setOtherUser(othersId);
+        viewers.setOtherUser(Long.parseLong(othersId));
 
         if (VIEWERS_CONTROLLER.isStatusViewed(viewers)) {
             System.out.println("Viewed..");

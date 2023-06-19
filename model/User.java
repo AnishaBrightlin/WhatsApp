@@ -57,6 +57,10 @@ public class User {
         this.status = status;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
     public List<Status> getStatus() {
         return status;
     }

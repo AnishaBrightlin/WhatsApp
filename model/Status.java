@@ -20,47 +20,32 @@ public class Status {
     private long id;
     private Format format;
     private long userId;
-    private List<Viewers> viewersList;
+    private List<User> viewersList;
 
     /**
      * Describes the status format.
      */
     public enum Format {
+
         TEXT(1), LINK(2), GIF(3), PHOTO(4), VIDEO(5), VOICE(6);
         private int value;
 
         Format(final int value) {
             this.value = value;
         }
+
+        public static Format get(int userChoice) throws FormatException {
+            for (final Format format : Format.values()) {
+                if (format.value == userChoice) {
+                    return format;
+                }
+            }
+            throw new FormatException("Invalid format choice.");
+        }
     }
 
     public void setFormat(final int userChoice) {
-        this.format = getFormatFromUser(userChoice);
-    }
-
-    private Format getFormatFromUser(final int userChoice) throws FormatException {
-
-        switch (userChoice) {
-            case 1:
-                return Format.TEXT;
-            case 2:
-                return Format.LINK;
-            case 3:
-                return Format.GIF;
-            case 4:
-                return Format.PHOTO;
-            case 5:
-                return Format.VIDEO;
-            case 6:
-                return Format.VOICE;
-            default:
-                try {
-                    throw new FormatException("Enter the choice between 1-6");
-                } catch (FormatException formatException) {
-                    System.out.println(formatException);
-                }
-        }
-        return null;
+        this.format = Format.get(userChoice);
     }
 
     public void setCaption(final String caption) {
@@ -79,7 +64,7 @@ public class Status {
         this.id = id;
     }
 
-    public void setViewersList(final List<Viewers> viewersList) {
+    public void setViewersList(final List<User> viewersList) {
         this.viewersList = viewersList;
     }
 
@@ -103,7 +88,7 @@ public class Status {
         return id;
     }
 
-    public List<Viewers> getViewersList() {
+    public List<User> getViewersList() {
         return viewersList;
     }
 

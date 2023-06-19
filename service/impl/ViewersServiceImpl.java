@@ -1,6 +1,7 @@
-package com.whatsapp.service;
+package com.whatsapp.service.impl;
 
 import com.whatsapp.model.Viewers;
+import com.whatsapp.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Iterator;

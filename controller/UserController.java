@@ -1,9 +1,9 @@
 package com.whatsapp.controller;
 
 import com.whatsapp.model.User;
-import com.whatsapp.service.UserServiceImpl;
+
+import com.whatsapp.service.impl.UserServiceImpl;
 import com.whatsapp.service.UserService;
-import com.whatsapp.view.UserView;
 
 /**
  * <p>

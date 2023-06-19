@@ -1,7 +1,5 @@
 package com.whatsapp.view.validation;
 
-import com.whatsapp.service.UserService;
-
 /**
  * Validates the user status
  *

@@ -1,6 +1,7 @@
 package com.whatsapp.view.validation;
 
 import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -109,9 +110,9 @@ public class UserValidation {
             final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")
                     .withResolverStyle(ResolverStyle.STRICT);
             final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
-            final int currentYear = LocalDate.now().getYear();
+            final LocalDate currentDate = LocalDate.now();
 
-            if (date.getYear() < 1940 || date.getYear() > currentYear) {
+            if (date.getYear() < 1940 || date.isAfter(currentDate)) {
                 return false;
             }
             return true;

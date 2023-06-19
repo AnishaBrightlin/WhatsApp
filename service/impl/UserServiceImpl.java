@@ -1,7 +1,7 @@
-package com.whatsapp.service;
+package com.whatsapp.service.impl;
 
-import com.whatsapp.controller.StatusController;
 import com.whatsapp.model.User;
+import com.whatsapp.service.UserService;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -113,6 +113,7 @@ public class UserServiceImpl implements UserService {
             if (existingUser.getMobileNumber().equals(user.getMobileNumber())) {
                 existingUser.setName(user.getName());
                 existingUser.setDateOfBirth(user.getDateOfBirth());
+                existingUser.setAbout(user.getAbout());
 
                 return true;
             }

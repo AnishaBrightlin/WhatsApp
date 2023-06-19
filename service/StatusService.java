@@ -53,7 +53,7 @@ public interface StatusService {
      * @param othersId Represents the other user
      * @return {@link List} of {@link Status} id
      */
-    List<Long> getStatusId(final long othersId);
+    int getStatusId(final long othersId);
 
     /**
      * <p>
@@ -74,6 +74,8 @@ public interface StatusService {
      * @return the {@link List} of {@link Status}
      */
     List<Status> getStatusList(final long id);
+
+    boolean isIdExist(final long id);
 
     /**
      * <p>

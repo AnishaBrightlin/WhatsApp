@@ -45,7 +45,7 @@ public class UserView {
                 user.setMobileNumber(getMobileNumber());
                 user.setDateOfBirth(getDateOfBirth());
                 user.setName(getName());
-                user.setAbout(setAbout());
+                user.setAbout(getAbout());
 
                 if (USER_CONTROLLER.signUp(user)) {
                     System.out.println("Sign up successfully");
@@ -174,6 +174,11 @@ public class UserView {
 
         user.setDateOfBirth(((userOption.equalsIgnoreCase(YES)) || (userOption.equalsIgnoreCase("y")))
                 ? getDateOfBirth() : user.getDateOfBirth());
+        System.out.println("If you want to update the about enter yes/y else no/n");
+        userOption = getUserOption();
+
+        user.setAbout(((userOption.equalsIgnoreCase(YES)) || (userOption.equalsIgnoreCase("y")))
+                ? getAbout() : user.getAbout());
 
         if (USER_CONTROLLER.isUpdateProfile(user)) {
             System.out.println("Successfully updated");
@@ -229,12 +234,12 @@ public class UserView {
 
     /**
      * <p>
-     * Sets the user about.
+     * Gets the user about.
      * </p>
      *
      * @return the {@link User} about
      */
-    private String setAbout() {
+    private String getAbout() {
         System.out.println("Press 1 for predefined about and press 2 for custom about");
         String about = null;
 
@@ -247,16 +252,17 @@ public class UserView {
                     about = PREDEFINED_ABOUT_OPTIONS[choice - 1];
                 } else {
                     System.out.println("Enter a valid choice between 1-" + PREDEFINED_ABOUT_OPTIONS.length);
-                    setAbout();
+                    about = getAbout();
                 }
                 break;
             case 2:
                 System.out.println("Enter your about");
                 about = SCANNER.nextLine();
+
                 break;
             default:
                 System.out.println("Enter a valid choice 1 or 2");
-                setAbout();
+                about = getAbout();
         }
         return about;
     }
@@ -410,7 +416,6 @@ public class UserView {
         switch (getUserChoice()) {
             case 1:
                 signUp();
-                signIn();
                 break;
             case 2:
                 signIn();

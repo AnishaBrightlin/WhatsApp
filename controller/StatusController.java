@@ -1,8 +1,9 @@
 package com.whatsapp.controller;
 
 import com.whatsapp.model.Status;
+
 import com.whatsapp.service.StatusService;
-import com.whatsapp.service.StatusServiceImpl;
+import com.whatsapp.service.impl.StatusServiceImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -90,7 +91,7 @@ public class StatusController {
      * @param othersId Represents the other user
      * @return the list of {@link Status} id
      */
-    public List<Long> getStatusId(final long othersId) {
+    public int getStatusId(final long othersId) {
         return STATUS_SERVICE.getStatusId(othersId);
     }
 
@@ -104,6 +105,10 @@ public class StatusController {
      */
     public Status getOthersStatus(final long statusId) {
         return STATUS_SERVICE.getOthersStatus(statusId);
+    }
+
+    public boolean isIdExist(final long otherId) {
+        return STATUS_SERVICE.isIdExist(otherId);
     }
 
     /**

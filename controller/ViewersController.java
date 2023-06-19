@@ -1,7 +1,7 @@
 package com.whatsapp.controller;
 
 import com.whatsapp.model.Viewers;
-import com.whatsapp.service.ViewersServiceImpl;
+import com.whatsapp.service.impl.ViewersServiceImpl;
 
 import java.util.List;
 

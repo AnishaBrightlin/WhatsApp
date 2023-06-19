@@ -1,9 +1,8 @@
-package com.whatsapp.service;
+package com.whatsapp.service.impl;
 
-import com.whatsapp.controller.StatusController;
 import com.whatsapp.model.Status;
+import com.whatsapp.service.StatusService;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
@@ -51,11 +50,8 @@ public class StatusServiceImpl implements StatusService {
      * @return the {@link List} of {@link Status}
      */
     public Status getStatus(final long id) {
-        final Iterator<Status> iterator = statusList.iterator();
 
-        while (iterator.hasNext()) {
-            final Status status = iterator.next();
-
+        for (final Status status : statusList) {
             if (status.getUserId() == id) {
                 return status;
             }
@@ -71,12 +67,10 @@ public class StatusServiceImpl implements StatusService {
      */
     public List<Status> getStatusList(final long id) {
         final List<Status> userStatus = new ArrayList<>();
-        final Iterator<Status> iterator = statusList.iterator();
 
         if (isIdExist(id)) {
 
-            while (iterator.hasNext()) {
-                final Status status = iterator.next();
+            for (final Status status : statusList) {
 
                 if (id == status.getUserId()) {
                     userStatus.add(status);
@@ -87,14 +81,12 @@ public class StatusServiceImpl implements StatusService {
     }
 
     public boolean isIdExist(final long id) {
-        final Iterator<Status> iterator = statusList.iterator();
 
-        while (iterator.hasNext()) {
-            final Status status = iterator.next();
+        for (final Status status : statusList) {
 
-           if (id == status.getUserId()) {
-               return true;
-           }
+            if (id == status.getUserId()) {
+                return true;
+            }
         }
         return false;
     }
@@ -107,17 +99,15 @@ public class StatusServiceImpl implements StatusService {
      */
     public List<Long> getStatusIdList(final long id) {
         final List<Long> userStatus = new ArrayList<>();
-        final Iterator<Status> iterator = statusList.iterator();
 
-        while (iterator.hasNext()) {
-            final Status status = iterator.next();
-
-            if (status != null && id != status.getUserId()) {
+        for (final Status status : statusList) {
+            if (status != null && id != status.getUserId() && !userStatus.contains(status.getUserId())) {
                 userStatus.add(status.getUserId());
             }
         }
         return userStatus;
     }
+
 
     /**
      * {@inheritDoc}
@@ -125,21 +115,19 @@ public class StatusServiceImpl implements StatusService {
      * @param otherId Represents the other user
      * @return the {@link List} of {@link Status} id
      */
-    public List<Long> getStatusId(final long otherId) {
+    public int getStatusId(final long otherId) {
         final List<Long> statusId = new ArrayList<>();
-        final Iterator<Status> iterator = statusList.iterator();
 
         if (isIdExist(otherId)) {
 
-            while (iterator.hasNext()) {
-                final Status status = iterator.next();
+            for (final Status status : statusList) {
 
                 if (otherId == status.getUserId()) {
                     statusId.add(status.getId());
                 }
             }
         }
-        return statusId;
+        return statusId.size();
     }
 
     /**
@@ -149,10 +137,8 @@ public class StatusServiceImpl implements StatusService {
      * @return the {@link Status}
      */
     public Status getOthersStatus(final long statusId) {
-        final Iterator<Status> iterator = statusList.iterator();
 
-        while (iterator.hasNext()) {
-            final Status status = iterator.next();
+        for (final Status status : statusList) {
 
             if (statusId == status.getId()) {
                 return status;
