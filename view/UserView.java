@@ -20,7 +20,6 @@ public class UserView {
     private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String YES = "yes";
-    private static long id = 1;
     private static final String[] PREDEFINED_ABOUT_OPTIONS = {
             "Online class",
             "Available",
@@ -35,33 +34,22 @@ public class UserView {
      * </p>
      */
     private void signUp() {
-        System.out.println("Enter 1 for sign up and 2 for exit");
 
-        switch (getUserChoice()) {
-            case 1:
-                final User user = new User();
+        final User user = new User();
 
-                user.setId(id++);
-                user.setMobileNumber(getMobileNumber());
-                user.setDateOfBirth(getDateOfBirth());
-                user.setName(getName());
-                user.setAbout(getAbout());
+        user.setMobileNumber(getMobileNumber());
+        user.setDateOfBirth(getDateOfBirth());
+        user.setName(getName());
+        user.setAbout(getAbout());
 
-                if (USER_CONTROLLER.signUp(user)) {
-                    System.out.println("Sign up successfully");
-                    viewHomeScreen(user.getId());
-                } else {
-                    System.out.println("Something went wrong retry");
-                    signUp();
-                }
-                break;
-            case 2:
-                SCANNER.close();
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Enter the valid choice 1 or 2");
-                signUp();
+        if (USER_CONTROLLER.signUp(user)) {
+            System.out.println("Sign up successfully");
+            user.setId(USER_CONTROLLER.getUserId(user.getMobileNumber()));
+            viewHomeScreen(USER_CONTROLLER.getUserId(user.getMobileNumber()));
+        } else {
+            System.out.println("Something went wrong retry or the user is  already exist");
+            System.out.println("If you had an account already please sign in or sign up with another mobile number");
+            getMenuChoice();
         }
     }
 
@@ -201,7 +189,7 @@ public class UserView {
         switch (getUserChoice()) {
             case 1:
 
-                if (USER_CONTROLLER.deleteAccount(id)) {
+                if (USER_CONTROLLER.isAccountDeleted(id)) {
                     System.out.println("Account is deleted");
                     getMenuChoice();
                 } else {

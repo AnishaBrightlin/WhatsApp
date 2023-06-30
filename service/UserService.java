@@ -57,10 +57,10 @@ public interface UserService {
      * Deletes the {@link User} account associated with the provided id.
      * </p>
      *
-     * @param currentId Represents the {@link User} id
+     * @param id Represents the {@link User} id
      * @return true if the account is deleted else false
      */
-    boolean deleteAccount(final long currentId);
+    boolean isAccountDeleted(final long id);
 
     /**
      * <p>

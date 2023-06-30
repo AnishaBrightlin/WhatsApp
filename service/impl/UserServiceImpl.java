@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
      * @param currentId Represents the {@link User} id.
      * @return true if the account is deleted else false
      */
-    public boolean deleteAccount(final long currentId) {
+    public boolean isAccountDeleted(final long currentId) {
         return userSet.removeIf(user -> user.getId() == currentId);
     }
 }

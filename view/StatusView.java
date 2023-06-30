@@ -87,7 +87,7 @@ public class StatusView {
         status.setFormat(getFormat());
         status.setStatusId(statusId++);
         status.setUserId(userId);
-        status.setUploadedTime(calender.getTime());
+        status.setUploadedTime(String.valueOf(calender.getTime()));
         System.out.println("Want to add caption if yes press y or yes else no or n");
         String userOption = getUserOption();
 
@@ -95,7 +95,7 @@ public class StatusView {
             status.setCaption(getCaption());
         }
 
-        if (STATUS_CONTROLLER.isUpload(status)) {
+        if (STATUS_CONTROLLER.isStatusUploaded(status)) {
             System.out.println("Uploaded");
         } else {
             System.out.println("Something went wrong retry");
@@ -159,13 +159,13 @@ public class StatusView {
 
         final User user = USER_CONTROLLER.getUserDetail(userId);
 
-        if (user == null || user.getStatus() == null) {
+        if (user == null || STATUS_CONTROLLER.getStatusList(userId) == null) {
             System.out.println("No status found for the user.");
             goToStatus(userId);
         }
         System.out.println("The statuses are:");
 
-        for (final Status status : user.getStatus()) {
+        for (final Status status : STATUS_CONTROLLER.getStatusList(userId)) {
 
             try {
                 Thread.sleep(2000);
@@ -209,7 +209,6 @@ public class StatusView {
         final String othersId = SCANNER.nextLine();
 
         if (STATUS_CONTROLLER.isIdExist(Long.parseLong(othersId))) {
-            System.out.println("There are " + STATUS_CONTROLLER.getStatusId(Long.parseLong(othersId)) + " status");
             final List<Status> otherStatus = STATUS_CONTROLLER.getStatusList(Long.parseLong(othersId));
 
             System.out.println("The Status are");

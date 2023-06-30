@@ -2,7 +2,6 @@ package com.whatsapp.model;
 
 import com.whatsapp.exception.FormatException;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ import java.util.List;
 public class Status {
 
     private String caption;
-    private Date uploadedTime;
+    private String uploadedTime;
     private long id;
     private Format format;
     private long userId;
@@ -58,7 +57,7 @@ public class Status {
         this.userId = userId;
     }
 
-    public void setUploadedTime(final Date uploadedTime) {
+    public void setUploadedTime(final String uploadedTime) {
         this.uploadedTime = uploadedTime;
     }
 
@@ -86,7 +85,7 @@ public class Status {
         return caption;
     }
 
-    public Date getStatusTime() {
+    public String getStatusTime() {
         return uploadedTime;
     }
 
@@ -95,6 +94,6 @@ public class Status {
     }
 
     public String toString() {
-        return String.format("StatusId: %x Format: %s Caption: %s UploadedTime: %s", id, format, caption, uploadedTime);
+        return String.format("StatusId: %x Caption: %s UploadedTime: %s", id, caption, uploadedTime);
     }
 }
